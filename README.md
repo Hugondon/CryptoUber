@@ -1,4 +1,4 @@
-# CryptoUber: Blockchain solution to our riding problems
+# RideShare: Blockchain solution to our riding problems
 
 ## Cryptology and Security Tools Final Project
 
