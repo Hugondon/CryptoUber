@@ -20,7 +20,7 @@ class Profile(ttk.Frame):
         offers_label = ttk.Label(
             self,
             text="Details",
-            style="ProfileSubtitle.TLabel"
+            style="ProfileTitle2.TLabel"
         )
 
         offers_label.grid(row=0, column=0, sticky="EW",
