@@ -1,3 +1,4 @@
+import settings
 import tkinter as tk
 
 from tkinter import CENTER, ttk
@@ -13,6 +14,7 @@ class RideSharing(tk.Tk):
     MONEY_PNG_PATH = "imgs/money.png"
     PLACEHOLDER_PNG_PATH = "imgs/placeholder.png"
     SEATS_PNG_PATH = "imgs/seats.png"
+    ICON_ICO_PATH = "imgs/R.ico"
 
     PNG_WIDTH, PNG_HEIGHT = 512, 512
     PNG_RESIZE_FACTOR = 26
@@ -112,7 +114,7 @@ class RideSharing(tk.Tk):
         self.title("Ridesharing App")
         self.geometry("700x640")
         self["background"] = COLOR_APP_BACKGROUND
-
+        self.iconbitmap(self.ICON_ICO_PATH)
         """ LAYOUT CONFIGURATION """
         self.columnconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
@@ -130,24 +132,24 @@ class RideSharing(tk.Tk):
             style="TextTitle.TLabel",
         )
 
-        rideshare_offer_frame = Offers(
+        self.rideshare_offer_frame = Offers(
             container, self, style="OffersFrame.TFrame")
 
-        future_travels_frame = FutureTravels(
+        self.future_travels_frame = FutureTravels(
             container, self, style="TravelsFrame.TFrame"
         )
 
-        profile_frame = Profile(
+        self.profile_frame = Profile(
             container, self, style="ProfileFrame.TFrame"
         )
 
         ridesharing_title_label.grid(row=0, column=0, sticky="EW",
                                      padx=(175, 0))
-        rideshare_offer_frame.grid(
+        self.rideshare_offer_frame.grid(
             row=1, column=0, sticky="NESW")
-        future_travels_frame.grid(
+        self.future_travels_frame.grid(
             row=2, column=0, sticky="NESW")
-        profile_frame.grid(
+        self.profile_frame.grid(
             row=0, column=1, rowspan=3, sticky="NESW"
         )
 

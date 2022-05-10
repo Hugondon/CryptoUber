@@ -14,7 +14,7 @@
 
 ## Tareas
 
-- [ ] Deliverable # 1 - MOC of User Interface
+- [X] Deliverable # 1 - MOC of User Interface
 - [ ] Deliverable # 2 - System Infrastructure
 - [ ] Deliverable # 3 - Exam Workshop
 

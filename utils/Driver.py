@@ -9,4 +9,4 @@ class Driver():
         self.cost_MXN = cost_MXN
 
     def __str__(self):
-        return f"Selected: {self.selected}\nName: {self.name}\nDate: {self.date}\nDestination: {self.destination}\nAvailable Seats: {self.number_of_seats}\nCost MXN: {self.cost_mxn}\n"
+        return f"Selected: {self.selected}\nName: {self.name}\nDate: {self.date}\nDestination: {self.destination}\nAvailable Seats: {self.number_of_seats}\nCost MXN: {self.cost_MXN}\n"
