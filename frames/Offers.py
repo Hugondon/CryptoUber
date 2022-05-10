@@ -1,9 +1,10 @@
 import tkinter as tk
 
 
-from tkinter import ttk
+from tkinter import CENTER, ttk
 from frames.const import *
 from PIL import ImageTk, Image
+from utils.example_drivers import *
 
 
 class Offers(ttk.Frame):
@@ -101,6 +102,12 @@ class Offers(ttk.Frame):
             style="OffersTitle3.TLabel",
             padding=(10, 5, 5, 0)
         )
+        selection_label.config(anchor=CENTER)
+        driver_label.config(anchor=CENTER)
+        date_time_label.config(anchor=CENTER)
+        destination_label.config(anchor=CENTER)
+        seats_number_label.config(anchor=CENTER)
+        cost_MXN_label.config(anchor=CENTER)
 
         table_separator = ttk.Separator(self)
 
@@ -114,11 +121,133 @@ class Offers(ttk.Frame):
         table_separator.grid(row=3, columnspan=6, padx=(10, 5), sticky="EW")
 
         """ FOURTH ROW """
-        self.test_checkbox_value = tk.BooleanVar(self)
-        self.test_checkbox = ttk.Checkbutton(
-            self, variable=self.test_checkbox_value, command=self.checkbox_clicked,
+        self.fourth_row_checkbox_value = tk.BooleanVar(self)
+        self.fourth_row_checkbox_value.set(False)
+        self.fourth_row_checkbox = ttk.Checkbutton(
+            self, variable=self.fourth_row_checkbox_value, command=self.fourth_row_checkbox_clicked,
             style="OffersCheckButton.TCheckbutton")
-        self.test_checkbox.grid(row=4, column=0)
 
-    def checkbox_clicked(self):
-        print(self.test_checkbox_value.get())
+        self.fourth_row_driver_label = ttk.Label(
+            self,
+            text=f'{EXAMPLE_DRIVER_1["name"]}',
+            style="OffersNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.fourth_row_date_label = ttk.Label(
+            self,
+            text=f'{EXAMPLE_DRIVER_1["date"]}',
+            style="OffersNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.fourth_row_destination_label = ttk.Label(
+            self,
+            text=f'{EXAMPLE_DRIVER_1["destination"]}',
+            style="OffersNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.fourth_row_seats_label = ttk.Label(
+            self,
+            text=f'{EXAMPLE_DRIVER_1["number_of_seats"]}',
+            style="OffersNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.fourth_row_cost_label = ttk.Label(
+            self,
+            text=f'${EXAMPLE_DRIVER_1["cost_MXN"]}',
+            style="OffersNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+
+        self.fourth_row_driver_label.config(anchor=CENTER)
+        self.fourth_row_date_label.config(anchor=CENTER)
+        self.fourth_row_destination_label.config(anchor=CENTER)
+        self.fourth_row_seats_label.config(anchor=CENTER)
+        self.fourth_row_cost_label.config(anchor=CENTER)
+
+        self.fourth_row_checkbox.grid(row=4, column=0)
+        self.fourth_row_driver_label.grid(row=4, column=1)
+        self.fourth_row_date_label.grid(row=4, column=2)
+        self.fourth_row_destination_label.grid(row=4, column=3)
+        self.fourth_row_seats_label.grid(row=4, column=4)
+        self.fourth_row_cost_label.grid(row=4, column=5)
+
+        """ FIFTH ROW """
+        self.fifth_row_checkbox_value = tk.BooleanVar(self)
+        self.fifth_row_checkbox_value.set(False)
+        self.fifth_row_checkbox = ttk.Checkbutton(
+            self, variable=self.fifth_row_checkbox_value, command=self.fifth_row_checkbox_clicked,
+            style="OffersCheckButton.TCheckbutton")
+
+        self.fifth_row_driver_label = ttk.Label(
+            self,
+            text=f'{EXAMPLE_DRIVER_2["name"]}',
+            style="OffersNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.fifth_row_date_label = ttk.Label(
+            self,
+            text=f'{EXAMPLE_DRIVER_2["date"]}',
+            style="OffersNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.fifth_row_destination_label = ttk.Label(
+            self,
+            text=f'{EXAMPLE_DRIVER_2["destination"]}',
+            style="OffersNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.fifth_row_seats_label = ttk.Label(
+            self,
+            text=f'{EXAMPLE_DRIVER_2["number_of_seats"]}',
+            style="OffersNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.fifth_row_cost_label = ttk.Label(
+            self,
+            text=f'${EXAMPLE_DRIVER_2["cost_MXN"]}',
+            style="OffersNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+
+        self.fifth_row_driver_label.config(anchor=CENTER)
+        self.fifth_row_date_label.config(anchor=CENTER)
+        self.fifth_row_destination_label.config(anchor=CENTER)
+        self.fifth_row_seats_label.config(anchor=CENTER)
+        self.fifth_row_cost_label.config(anchor=CENTER)
+
+        self.fifth_row_checkbox.grid(row=5, column=0)
+        self.fifth_row_driver_label.grid(row=5, column=1)
+        self.fifth_row_date_label.grid(row=5, column=2)
+        self.fifth_row_destination_label.grid(row=5, column=3)
+        self.fifth_row_seats_label.grid(row=5, column=4)
+        self.fifth_row_cost_label.grid(row=5, column=5)
+
+    def fourth_row_checkbox_clicked(self):
+        print(f'Selected: {EXAMPLE_DRIVER_1["selected"]}')
+        print(f'Name: {EXAMPLE_DRIVER_1["name"]}')
+        print(f'Date: {EXAMPLE_DRIVER_1["date"]}')
+        print(f'Destination: {EXAMPLE_DRIVER_1["destination"]}')
+        print(f'Available Seats: {EXAMPLE_DRIVER_1["number_of_seats"]}')
+        print(f'Cost MXN: {EXAMPLE_DRIVER_1["cost_MXN"]}')
+
+        print(self.fourth_row_checkbox_value.get())
+
+    def fifth_row_checkbox_clicked(self):
+        print(f'Selected: {EXAMPLE_DRIVER_2["selected"]}')
+        print(f'Name: {EXAMPLE_DRIVER_2["name"]}')
+        print(f'Date: {EXAMPLE_DRIVER_2["date"]}')
+        print(f'Destination: {EXAMPLE_DRIVER_2["destination"]}')
+        print(f'Available Seats: {EXAMPLE_DRIVER_2["number_of_seats"]}')
+        print(f'Cost MXN: {EXAMPLE_DRIVER_2["cost_MXN"]}')
+
+        print(self.fourth_row_checkbox_value.get())

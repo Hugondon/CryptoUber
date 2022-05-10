@@ -1,9 +1,10 @@
 import tkinter as tk
 
 
-from tkinter import ttk
+from tkinter import CENTER, ttk
 from frames.const import *
 from PIL import ImageTk, Image
+from utils.example_drivers import *
 
 
 class FutureTravels(ttk.Frame):
@@ -102,6 +103,13 @@ class FutureTravels(ttk.Frame):
             padding=(10, 5, 5, 0)
         )
 
+        selection_label.config(anchor=CENTER)
+        driver_label.config(anchor=CENTER)
+        date_time_label.config(anchor=CENTER)
+        destination_label.config(anchor=CENTER)
+        seats_number_label.config(anchor=CENTER)
+        cost_MXN_label.config(anchor=CENTER)
+
         table_separator = ttk.Separator(self)
 
         selection_label.grid(row=2, column=0, sticky="EW",
@@ -113,3 +121,70 @@ class FutureTravels(ttk.Frame):
         cost_MXN_label.grid(row=2, column=5, sticky="EW")
         table_separator.grid(row=3, columnspan=6, padx=(10, 10), sticky="EW")
         """ FOURTH ROW """
+
+        self.fourth_row_accepted_label = ttk.Label(
+            self,
+            text="✓",
+            style="TravelsNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+        )
+
+        self.fourth_row_driver_label = ttk.Label(
+            self,
+            text=f'{EXAMPLE_DRIVER_3["name"]}',
+            style="TravelsNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.fourth_row_date_label = ttk.Label(
+            self,
+            text=f'{EXAMPLE_DRIVER_3["date"]}',
+            style="TravelsNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.fourth_row_destination_label = ttk.Label(
+            self,
+            text=f'{EXAMPLE_DRIVER_3["destination"]}',
+            style="TravelsNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.fourth_row_seats_label = ttk.Label(
+            self,
+            text=f'{EXAMPLE_DRIVER_3["number_of_seats"]}',
+            style="TravelsNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.fourth_row_cost_label = ttk.Label(
+            self,
+            text=f'${EXAMPLE_DRIVER_3["cost_MXN"]}',
+            style="TravelsNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+
+        self.fourth_row_accepted_label.config(anchor=CENTER)
+        self.fourth_row_driver_label.config(anchor=CENTER)
+        self.fourth_row_date_label.config(anchor=CENTER)
+        self.fourth_row_destination_label.config(anchor=CENTER)
+        self.fourth_row_seats_label.config(anchor=CENTER)
+        self.fourth_row_cost_label.config(anchor=CENTER)
+
+        self.fourth_row_accepted_label.grid(row=4, column=0)
+        self.fourth_row_driver_label.grid(row=4, column=1)
+        self.fourth_row_date_label.grid(row=4, column=2)
+        self.fourth_row_destination_label.grid(row=4, column=3)
+        self.fourth_row_seats_label.grid(row=4, column=4)
+        self.fourth_row_cost_label.grid(row=4, column=5)
+
+    def fourth_row_checkbox_clicked(self):
+        print(f'Selected: {EXAMPLE_DRIVER_3["selected"]}')
+        print(f'Name: {EXAMPLE_DRIVER_3["name"]}')
+        print(f'Date: {EXAMPLE_DRIVER_3["date"]}')
+        print(f'Destination: {EXAMPLE_DRIVER_3["destination"]}')
+        print(f'Available Seats: {EXAMPLE_DRIVER_3["number_of_seats"]}')
+        print(f'Cost MXN: {EXAMPLE_DRIVER_3["cost_MXN"]}')
+
+        print(self.fourth_row_checkbox_value.get())

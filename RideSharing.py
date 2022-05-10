@@ -82,6 +82,10 @@ class RideSharing(tk.Tk):
             foreground=COLOR_NORMAL_TEXT,
             font=("Segoe UI", 8)
         )
+        style.configure(
+            "TravelsCheckButton.TCheckbutton",
+            background=COLOR_FUTURE_TRAVELS_BACKGROUND,
+        )
         style.configure("TravelsLabel.TLabel",
                         background=COLOR_FUTURE_TRAVELS_BACKGROUND)
         style.configure("TravelsFrame.TFrame",
