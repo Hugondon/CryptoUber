@@ -131,35 +131,35 @@ class FutureTravels(ttk.Frame):
 
         self.fourth_row_driver_label = ttk.Label(
             self,
-            text=f'{EXAMPLE_DRIVER_3["name"]}',
+            text=f'{EXAMPLE_DRIVER_3.name}',
             style="TravelsNormalText.TLabel",
             padding=(0, 0, 5, 0)
 
         )
         self.fourth_row_date_label = ttk.Label(
             self,
-            text=f'{EXAMPLE_DRIVER_3["date"]}',
+            text=f'{EXAMPLE_DRIVER_3.date}',
             style="TravelsNormalText.TLabel",
             padding=(0, 0, 5, 0)
 
         )
         self.fourth_row_destination_label = ttk.Label(
             self,
-            text=f'{EXAMPLE_DRIVER_3["destination"]}',
+            text=f'{EXAMPLE_DRIVER_3.destination}',
             style="TravelsNormalText.TLabel",
             padding=(0, 0, 5, 0)
 
         )
         self.fourth_row_seats_label = ttk.Label(
             self,
-            text=f'{EXAMPLE_DRIVER_3["number_of_seats"]}',
+            text=f'{EXAMPLE_DRIVER_3.number_of_seats}',
             style="TravelsNormalText.TLabel",
             padding=(0, 0, 5, 0)
 
         )
         self.fourth_row_cost_label = ttk.Label(
             self,
-            text=f'${EXAMPLE_DRIVER_3["cost_MXN"]}',
+            text=f'${EXAMPLE_DRIVER_3.cost_MXN}',
             style="TravelsNormalText.TLabel",
             padding=(0, 0, 5, 0)
 
@@ -180,11 +180,11 @@ class FutureTravels(ttk.Frame):
         self.fourth_row_cost_label.grid(row=4, column=5)
 
     def fourth_row_checkbox_clicked(self):
-        print(f'Selected: {EXAMPLE_DRIVER_3["selected"]}')
-        print(f'Name: {EXAMPLE_DRIVER_3["name"]}')
-        print(f'Date: {EXAMPLE_DRIVER_3["date"]}')
-        print(f'Destination: {EXAMPLE_DRIVER_3["destination"]}')
-        print(f'Available Seats: {EXAMPLE_DRIVER_3["number_of_seats"]}')
-        print(f'Cost MXN: {EXAMPLE_DRIVER_3["cost_MXN"]}')
+        print(f'Selected: {EXAMPLE_DRIVER_3.selected}')
+        print(f'Name: {EXAMPLE_DRIVER_3.name}')
+        print(f'Date: {EXAMPLE_DRIVER_3.date}')
+        print(f'Destination: {EXAMPLE_DRIVER_3.destination}')
+        print(f'Available Seats: {EXAMPLE_DRIVER_3.number_of_seats}')
+        print(f'Cost MXN: {EXAMPLE_DRIVER_3.cost_MXN}')
 
         print(self.fourth_row_checkbox_value.get())

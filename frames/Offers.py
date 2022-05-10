@@ -133,13 +133,13 @@ class Offers(ttk.Frame):
         self.fourth_row_number_of_seats_str = tk.StringVar()
         self.fourth_row_cost_MXN_str = tk.StringVar()
 
-        self.fourth_row_driver_str.set(f'{EXAMPLE_DRIVER_1["name"]}')
-        self.fourth_row_date_str.set(f'{EXAMPLE_DRIVER_1["date"]}')
+        self.fourth_row_driver_str.set(f'{EXAMPLE_DRIVER_1.name}')
+        self.fourth_row_date_str.set(f'{EXAMPLE_DRIVER_1.date}')
         self.fourth_row_destination_str.set(
-            f'{EXAMPLE_DRIVER_1["destination"]}')
+            f'{EXAMPLE_DRIVER_1.destination}')
         self.fourth_row_number_of_seats_str.set(
-            f'{EXAMPLE_DRIVER_1["number_of_seats"]}')
-        self.fourth_row_cost_MXN_str.set(f'{EXAMPLE_DRIVER_1["cost_MXN"]}')
+            f'{EXAMPLE_DRIVER_1.number_of_seats}')
+        self.fourth_row_cost_MXN_str.set(f'{EXAMPLE_DRIVER_1.cost_MXN}')
 
         self.fourth_row_driver_label = ttk.Label(
             self,
@@ -197,13 +197,13 @@ class Offers(ttk.Frame):
         self.fifth_row_number_of_seats_str = tk.StringVar()
         self.fifth_row_cost_MXN_str = tk.StringVar()
 
-        self.fifth_row_driver_str.set(f'{EXAMPLE_DRIVER_2["name"]}')
-        self.fifth_row_date_str.set(f'{EXAMPLE_DRIVER_2["date"]}')
+        self.fifth_row_driver_str.set(f'{EXAMPLE_DRIVER_2.name}')
+        self.fifth_row_date_str.set(f'{EXAMPLE_DRIVER_2.date}')
         self.fifth_row_destination_str.set(
-            f'{EXAMPLE_DRIVER_2["destination"]}')
+            f'{EXAMPLE_DRIVER_2.destination}')
         self.fifth_row_number_of_seats_str.set(
-            f'{EXAMPLE_DRIVER_2["number_of_seats"]}')
-        self.fifth_row_cost_MXN_str.set(f'{EXAMPLE_DRIVER_2["cost_MXN"]}')
+            f'{EXAMPLE_DRIVER_2.number_of_seats}')
+        self.fifth_row_cost_MXN_str.set(f'{EXAMPLE_DRIVER_2.cost_MXN}')
 
         self.fifth_row_checkbox_value = tk.BooleanVar(self)
         self.fifth_row_checkbox_value.set(False)
@@ -260,12 +260,12 @@ class Offers(ttk.Frame):
         self.fifth_row_cost_label.grid(row=5, column=5)
 
     def upper_row_shift(self):
-        self.fourth_row_driver_str.set(EXAMPLE_DRIVER_2["name"])
-        self.fourth_row_date_str.set(EXAMPLE_DRIVER_2["date"])
-        self.fourth_row_destination_str.set(EXAMPLE_DRIVER_2["destination"])
+        self.fourth_row_driver_str.set(EXAMPLE_DRIVER_2.name)
+        self.fourth_row_date_str.set(EXAMPLE_DRIVER_2.date)
+        self.fourth_row_destination_str.set(EXAMPLE_DRIVER_2.destination)
         self.fourth_row_number_of_seats_str.set(
-            EXAMPLE_DRIVER_2["number_of_seats"])
-        self.fourth_row_cost_MXN_str.set(EXAMPLE_DRIVER_2["cost_MXN"])
+            EXAMPLE_DRIVER_2.number_of_seats)
+        self.fourth_row_cost_MXN_str.set(EXAMPLE_DRIVER_2.cost_MXN)
 
         empty_space = ""
         self.fifth_row_driver_str.set(empty_space)
