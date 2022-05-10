@@ -6,9 +6,9 @@
 
 | Nombre | Matrícula | Cuenta |
 | ----------- | ----------- | ----------- |
-| Frida Sofía Sosa Luviano  | A01650483  | |
-| Jorge Alejandro López Apresa | A01376543 |  |
-| Danya Ortega Cabrera | A01339201 | [DanyaOC](https://github.com/DanyaOC?) |
+| Frida Sofía Sosa Luviano  | A01650483  | [sofisoluv99](https://github.com/sofisoluv99) |
+| Jorge Alejandro López Apresa | A01376543 | [AlexLA26](https://github.com/AlexLA26)  |
+| Danya Ortega Cabrera | A01339201 | [DanyaOC](https://github.com/DanyaOC) |
 | Hugo René Pérez Cabrera | A01337226 | [Hugondon](https://github.com/Hugondon)  |
 ---
 
