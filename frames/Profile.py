@@ -24,7 +24,7 @@ class Profile(ttk.Frame):
         )
 
         offers_label.grid(row=0, column=0, sticky="EW",
-                          padx=(60, 0), pady=(5, 20))
+                          padx=(40, 0), pady=(5, 10))
 
         """ SECOND ROW """
         # imgs
@@ -42,8 +42,8 @@ class Profile(ttk.Frame):
         )
 
         name_label.grid(row=2, column=0, sticky="EW",
-                        padx=(15, 0))
+                        padx=(10, 0))
         id_label.grid(row=3, column=0, sticky="EW",
-                      padx=(15, 0))
+                      padx=(10, 0))
 
         """ FOURTH ROW """

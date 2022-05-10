@@ -8,6 +8,15 @@ from frames.const import *
 
 class RideSharing(tk.Tk):
 
+    CAR_PNG_PATH = "imgs/car.png"
+    CLOCK_PNG_PATH = "imgs/clock.png"
+    MONEY_PNG_PATH = "imgs/money.png"
+    PLACEHOLDER_PNG_PATH = "imgs/placeholder.png"
+    SEATS_PNG_PATH = "imgs/seats.png"
+
+    PNG_WIDTH, PNG_HEIGHT = 512, 512
+    PNG_RESIZE_FACTOR = 26
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -45,6 +54,12 @@ class RideSharing(tk.Tk):
             foreground=COLOR_NORMAL_TEXT,
             font=("Segoe UI", 8)
         )
+        style.configure(
+            "OffersCheckButton.TCheckbutton",
+            background=COLOR_OFFERS_BACKGROUND,
+        )
+        style.configure("OffersLabel.TLabel",
+                        background=COLOR_OFFERS_BACKGROUND)
         style.configure("OffersFrame.TFrame",
                         background=COLOR_OFFERS_BACKGROUND)
 
@@ -67,6 +82,8 @@ class RideSharing(tk.Tk):
             foreground=COLOR_NORMAL_TEXT,
             font=("Segoe UI", 8)
         )
+        style.configure("TravelsLabel.TLabel",
+                        background=COLOR_FUTURE_TRAVELS_BACKGROUND)
         style.configure("TravelsFrame.TFrame",
                         background=COLOR_FUTURE_TRAVELS_BACKGROUND)
 
@@ -97,7 +114,7 @@ class RideSharing(tk.Tk):
         self.rowconfigure(1, weight=1)
 
         container = ttk.Frame(self, style="AppFrame.TFrame")
-        container.grid(row=0, column=0, sticky="NW")
+        container.grid(row=0, column=0, sticky="NSEW")
         container.columnconfigure(0, minsize=550, weight=1)
         container.columnconfigure(1, minsize=200, weight=1)
 
