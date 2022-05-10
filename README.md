@@ -23,7 +23,11 @@
 ## Special Thanks
 
 Clock icon created by Those Icons - Flaticon
+
 Location icons created by Freepik - Flaticon
+
 Money icons created by Freepik - Flaticon
+
 Seats icons created by Freepik - Flaticon
+
 Car icons created by Freepik - Flaticon
