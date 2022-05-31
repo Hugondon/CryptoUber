@@ -9,6 +9,8 @@ from frames.const import *
 
 class RideSharing(tk.Tk):
 
+    WIDTH, HEIGHT = 700,640
+    
     CAR_PNG_PATH = "imgs/car.png"
     CLOCK_PNG_PATH = "imgs/clock.png"
     MONEY_PNG_PATH = "imgs/money.png"
@@ -18,6 +20,8 @@ class RideSharing(tk.Tk):
 
     PNG_WIDTH, PNG_HEIGHT = 512, 512
     PNG_RESIZE_FACTOR = 26
+    
+    
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -34,8 +38,13 @@ class RideSharing(tk.Tk):
             foreground=COLOR_TITLE_1_TEXT,
             font=("Segoe UI", 28, "italic")
         )
+        
         style.configure("AppFrame.TFrame",
                         background=COLOR_APP_BACKGROUND)
+        style.configure("ProfileFrame.TFrame",
+                        background=COLOR_PROFILE_BACKGROUND)
+        style.configure("OfferFrame.TFrame",
+                        background=COLOR_OFFERS_BACKGROUND)
 
         """ Rideshare Offers Frame Styles """
         style.configure(
@@ -96,9 +105,9 @@ class RideSharing(tk.Tk):
         """ Profile Frame Styles """
         style.configure(
             "ProfileTitle2.TLabel",
-            background=COLOR_PROFILE_BACKGROUND,
+            background=COLOR_PROFILE_TITLE_BACKGROUND,
             foreground=COLOR_TITLE_1_TEXT,
-            font=("Segoe UI", 14, 'bold')
+            font=("Segoe UI", 14)
         )
         style.configure(
             "ProfileInformation.TLabel",
@@ -109,10 +118,19 @@ class RideSharing(tk.Tk):
         style.configure("ProfileFrame.TFrame",
                         background=COLOR_PROFILE_BACKGROUND)
 
+
+        style.configure(
+            "ProfileInformationButton.TButton",
+            background=COLOR_PROFILE_BACKGROUND,
+            foreground=COLOR_NORMAL_TEXT,
+            relief="raised",
+            font=("Segoe UI", 10),
+        )
+
         """ Attributes  """
 
         self.title("Ridesharing App")
-        self.geometry("700x640")
+        self.geometry(f"{self.WIDTH}x{self.HEIGHT}")
         self["background"] = COLOR_APP_BACKGROUND
         self.iconbitmap(self.ICON_ICO_PATH)
         """ LAYOUT CONFIGURATION """
