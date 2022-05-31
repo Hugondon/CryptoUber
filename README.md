@@ -4,7 +4,7 @@
 
 ### Developed by Steren Squad
 
-| Nombre | Matrícula | Cuenta |
+| Name | ID | Account |
 | ----------- | ----------- | ----------- |
 | Frida Sofía Sosa Luviano  | A01650483  | [sofisoluv99](https://github.com/sofisoluv99) |
 | Jorge Alejandro López Apresa | A01376543 | [AlexLA26](https://github.com/AlexLA26)  |
@@ -12,13 +12,15 @@
 | Hugo René Pérez Cabrera | A01337226 | [Hugondon](https://github.com/Hugondon)  |
 ---
 
-## Tareas
+## Deliverables
 
 - [X] Deliverable # 1 - MOC of User Interface
 - [ ] Deliverable # 2 - System Infrastructure
 - [ ] Deliverable # 3 - Exam Workshop
 
 ## Graphical User Interface Guide
+
+1. Run the Ridesharing.py python file.
 
 ## Special Thanks
 
