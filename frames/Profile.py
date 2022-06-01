@@ -17,13 +17,13 @@ class Profile(ttk.Frame):
         """ LAYOUT CONFIGURATION """
 
         """ FIRST ROW """
-        offers_label = ttk.Label(
+        profile_label = ttk.Label(
             self,
             text="Details",
-            style="ProfileTitle2.TLabel"
+            style="ProfileTitle2.TLabel",
         )
 
-        offers_label.grid(row=0, column=0, sticky="EW",
+        profile_label.grid(row=0, column=0, sticky="EW",
                           padx=(45, 0), pady=(5, 10))
 
         """ SECOND ROW """
