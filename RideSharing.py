@@ -1,7 +1,8 @@
 import settings
 import tkinter as tk
+import os
 
-from tkinter import CENTER, ttk
+from tkinter import CENTER, ttk, Menu
 
 from frames import Offers, Profile, FutureTravels
 from frames.const import *
@@ -9,8 +10,9 @@ from frames.const import *
 
 class RideSharing(tk.Tk):
 
-    WIDTH, HEIGHT = 700,640
+    WIDTH, HEIGHT = 700,650
     
+    README_PATH = 'README.md'
     CAR_PNG_PATH = "imgs/car.png"
     CLOCK_PNG_PATH = "imgs/clock.png"
     MONEY_PNG_PATH = "imgs/money.png"
@@ -45,6 +47,8 @@ class RideSharing(tk.Tk):
                         background=COLOR_PROFILE_BACKGROUND)
         style.configure("OfferFrame.TFrame",
                         background=COLOR_OFFERS_BACKGROUND)
+        style.configure("NewOfferFrame.TFrame",
+                        background=COLOR_NEW_OFFER_BACKGROUND)
 
         """ Rideshare Offers Frame Styles """
         style.configure(
@@ -105,7 +109,7 @@ class RideSharing(tk.Tk):
         """ Profile Frame Styles """
         style.configure(
             "ProfileTitle2.TLabel",
-            background=COLOR_PROFILE_TITLE_BACKGROUND,
+            background=COLOR_PROFILE_BACKGROUND,
             foreground=COLOR_TITLE_1_TEXT,
             font=("Segoe UI", 14)
         )
@@ -127,6 +131,36 @@ class RideSharing(tk.Tk):
             font=("Segoe UI", 10),
         )
 
+        """ New Offer Frame Styles """
+        style.configure(
+            "NewOfferTitle2.TLabel",
+            background=COLOR_NEW_OFFER_TITLE_BACKGROUND,
+            foreground=COLOR_TITLE_2_TEXT,
+            font=("Segoe UI", 16)
+        )
+        style.configure(
+            "NewOfferTitle3.TLabel",
+            background=COLOR_NEW_OFFER_BACKGROUND,
+            foreground=COLOR_TITLE_2_TEXT,
+            font=("Segoe UI", 12, 'bold')
+        )
+
+        style.configure(
+            "NewOfferText.TLabel",
+            background=COLOR_NEW_OFFER_BACKGROUND,
+            foreground=COLOR_NORMAL_TEXT,
+            font=("Segoe UI", 12)
+        )
+        
+        style.configure(
+            "NewOfferButton.TButton",
+            background=COLOR_NEW_OFFER_BACKGROUND,
+            foreground=COLOR_NORMAL_TEXT,
+            relief="raised",
+            font=("Segoe UI", 10),
+        )
+        
+        
         """ Attributes  """
 
         self.title("Ridesharing App")
@@ -150,6 +184,18 @@ class RideSharing(tk.Tk):
             style="TextTitle.TLabel",
         )
 
+        menu_bar = Menu(self)
+        self.config(menu=menu_bar)
+        
+        file = Menu(menu_bar, tearoff=0)
+        file.add_command(label='Exit', command=self.quit)
+        
+        help = Menu(menu_bar, tearoff=0)
+        help.add_command(label='README', command=self.open_readme)
+    
+        menu_bar.add_cascade(label="File", menu=file)
+        menu_bar.add_cascade(label="Help", menu=help)
+
         self.rideshare_offer_frame = Offers(
             container, self, style="OffersFrame.TFrame")
 
@@ -171,6 +217,7 @@ class RideSharing(tk.Tk):
             row=0, column=1, rowspan=3, sticky="NESW"
         )
 
-
+    def open_readme(self):
+        os.startfile(self.README_PATH)
 app = RideSharing()
 app.mainloop()
