@@ -7,7 +7,74 @@ from frames.const import *
 from PIL import ImageTk, Image
 from utils.example_drivers import *
 
+class FutureTravelRow(ttk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent, width=50, height=75)
+        
+        """ ATTRIBUTE """
+        self.parent = parent
 
+        self.accepted_str = tk.StringVar()
+        self.driver_str = tk.StringVar()
+        self.date_str = tk.StringVar()
+        self.destination_str = tk.StringVar()
+        self.number_of_seats_str = tk.StringVar()
+        self.cost_MXN_str = tk.StringVar()
+        
+        self.accepted_label = ttk.Label(
+            parent,
+            textvariable=self.accepted_str,
+            style="TravelsNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+        )
+        self.driver_label = ttk.Label(
+            parent,
+            textvariable=self.driver_str,
+            style="TravelsNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+        )
+        self.date_label = ttk.Label(
+            parent,
+            textvariable=self.date_str,
+            style="TravelsNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.destination_label = ttk.Label(
+            parent,
+            textvariable=self.destination_str,
+            style="TravelsNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.seats_label = ttk.Label(
+            parent,
+            textvariable=self.number_of_seats_str,
+            style="TravelsNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+
+        )
+        self.cost_label = ttk.Label(
+            parent,
+            textvariable=self.cost_MXN_str,
+            style="TravelsNormalText.TLabel",
+            padding=(0, 0, 5, 0)
+        )
+        
+        self.driver_label.config(anchor=CENTER)
+        self.date_label.config(anchor=CENTER)
+        self.destination_label.config(anchor=CENTER)
+        self.seats_label.config(anchor=CENTER)
+        self.cost_label.config(anchor=CENTER)
+        
+    def clear_row(self):
+        self.accepted_str.set("")
+        self.driver_str.set("")
+        self.date_str.set("")
+        self.destination_str.set("")
+        self.number_of_seats_str.set("")
+        self.cost_MXN_str.set("")
+        
 class FutureTravels(ttk.Frame):
 
     def __init__(self, parent, controller, style):
@@ -20,14 +87,19 @@ class FutureTravels(ttk.Frame):
         """ LAYOUT CONFIGURATION """
 
         """ FIRST ROW """
-        future_travels_label = ttk.Label(
+        title_frame = ttk.Frame(
             self,
+            style="TravelsFrame.TFrame"
+        )
+        future_travels_label = ttk.Label(
+            title_frame,
             text="My Future Travels",
             style="TravelsTitle2.TLabel"
         )
+        future_travels_label.grid(row=0, column=0, sticky="EW")
 
-        future_travels_label.grid(row=0, column=0, columnspan=6, sticky="EW",
-                                  padx=(200, 200), pady=(5, 0))
+        title_frame.grid(row=0, column=0, columnspan=7, sticky="EW",
+                                  padx=(200, 0), pady=(5, 0))
 
         """ SECOND ROW """
         car_img = ImageTk.PhotoImage(Image.open(self.controller.CAR_PNG_PATH).resize(
@@ -64,12 +136,13 @@ class FutureTravels(ttk.Frame):
         placeholder_panel.grid(row=1, column=3, sticky="NS", pady=(5, 0))
         seats_panel.grid(row=1, column=4, sticky="NS", pady=(5, 0))
         money_panel.grid(row=1, column=5, sticky="NS", pady=(5, 0))
+        
         """ THIRD ROW """
         selection_label = ttk.Label(
             self,
             text="Accepted",
             style="TravelsNormalText.TLabel",
-            padding=(5, 5, 5, 0)
+            padding=(5, 5, 20, 0)
 
         )
 
@@ -81,7 +154,7 @@ class FutureTravels(ttk.Frame):
         )
         date_time_label = ttk.Label(
             self,
-            text="Date & Time",
+            text="Time",
             style="TravelsTitle3.TLabel",
             padding=(10, 5, 5, 0)
         )
@@ -99,7 +172,7 @@ class FutureTravels(ttk.Frame):
         )
         cost_MXN_label = ttk.Label(
             self,
-            text="Cost MXN",
+            text="Cost Eth",
             style="TravelsTitle3.TLabel",
             padding=(10, 5, 5, 0)
         )
@@ -120,480 +193,93 @@ class FutureTravels(ttk.Frame):
         destination_label.grid(row=2, column=3, sticky="EW")
         seats_number_label.grid(row=2, column=4, sticky="EW")
         cost_MXN_label.grid(row=2, column=5, sticky="EW")
+
         table_separator.grid(row=3, columnspan=6, padx=(10, 10), sticky="EW")
 
         """ FOURTH ROW """
-
-        self.fourth_row_accepted_str = tk.StringVar()
-        self.fourth_row_driver_str = tk.StringVar()
-        self.fourth_row_date_str = tk.StringVar()
-        self.fourth_row_destination_str = tk.StringVar()
-        self.fourth_row_number_of_seats_str = tk.StringVar()
-        self.fourth_row_cost_MXN_str = tk.StringVar()
-
-        self.fourth_row_accepted_label = ttk.Label(
-            self,
-            textvariable=self.fourth_row_accepted_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-        )
-        self.fourth_row_driver_label = ttk.Label(
-            self,
-            textvariable=self.fourth_row_driver_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-        )
-        self.fourth_row_date_label = ttk.Label(
-            self,
-            textvariable=self.fourth_row_date_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.fourth_row_destination_label = ttk.Label(
-            self,
-            textvariable=self.fourth_row_destination_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.fourth_row_seats_label = ttk.Label(
-            self,
-            textvariable=self.fourth_row_number_of_seats_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.fourth_row_cost_label = ttk.Label(
-            self,
-            textvariable=self.fourth_row_cost_MXN_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-
-        self.fourth_row_accepted_label.config(anchor=CENTER)
-        self.fourth_row_driver_label.config(anchor=CENTER)
-        self.fourth_row_date_label.config(anchor=CENTER)
-        self.fourth_row_destination_label.config(anchor=CENTER)
-        self.fourth_row_seats_label.config(anchor=CENTER)
-        self.fourth_row_cost_label.config(anchor=CENTER)
-
-        self.fourth_row_accepted_label.grid(row=4, column=0)
-        self.fourth_row_driver_label.grid(row=4, column=1)
-        self.fourth_row_date_label.grid(row=4, column=2)
-        self.fourth_row_destination_label.grid(row=4, column=3)
-        self.fourth_row_seats_label.grid(row=4, column=4)
-        self.fourth_row_cost_label.grid(row=4, column=5)
+        self.fourth_row = FutureTravelRow(self)
+        
+        self.fourth_row.accepted_label.grid(row=4, column=0)
+        self.fourth_row.driver_label.grid(row=4, column=1)
+        self.fourth_row.date_label.grid(row=4, column=2)
+        self.fourth_row.destination_label.grid(row=4, column=3)
+        self.fourth_row.seats_label.grid(row=4, column=4)
+        self.fourth_row.cost_label.grid(row=4, column=5)
 
         """ FIFTH ROW """
+        self.fifth_row = FutureTravelRow(self)
 
-        self.fifth_row_accepted_str = tk.StringVar()
-        self.fifth_row_driver_str = tk.StringVar()
-        self.fifth_row_date_str = tk.StringVar()
-        self.fifth_row_destination_str = tk.StringVar()
-        self.fifth_row_number_of_seats_str = tk.StringVar()
-        self.fifth_row_cost_MXN_str = tk.StringVar()
-
-        self.fifth_row_accepted_label = ttk.Label(
-            self,
-            textvariable=self.fifth_row_accepted_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-        )
-        self.fifth_row_driver_label = ttk.Label(
-            self,
-            textvariable=self.fifth_row_driver_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-        )
-        self.fifth_row_date_label = ttk.Label(
-            self,
-            textvariable=self.fifth_row_date_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.fifth_row_destination_label = ttk.Label(
-            self,
-            textvariable=self.fifth_row_destination_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.fifth_row_seats_label = ttk.Label(
-            self,
-            textvariable=self.fifth_row_number_of_seats_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.fifth_row_cost_label = ttk.Label(
-            self,
-            textvariable=self.fifth_row_cost_MXN_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-
-        self.fifth_row_accepted_label.config(anchor=CENTER)
-        self.fifth_row_driver_label.config(anchor=CENTER)
-        self.fifth_row_date_label.config(anchor=CENTER)
-        self.fifth_row_destination_label.config(anchor=CENTER)
-        self.fifth_row_seats_label.config(anchor=CENTER)
-        self.fifth_row_cost_label.config(anchor=CENTER)
-
-        self.fifth_row_accepted_label.grid(row=5, column=0)
-        self.fifth_row_driver_label.grid(row=5, column=1)
-        self.fifth_row_date_label.grid(row=5, column=2)
-        self.fifth_row_destination_label.grid(row=5, column=3)
-        self.fifth_row_seats_label.grid(row=5, column=4)
-        self.fifth_row_cost_label.grid(row=5, column=5)
+        self.fifth_row.accepted_label.grid(row=5, column=0)
+        self.fifth_row.driver_label.grid(row=5, column=1)
+        self.fifth_row.date_label.grid(row=5, column=2)
+        self.fifth_row.destination_label.grid(row=5, column=3)
+        self.fifth_row.seats_label.grid(row=5, column=4)
+        self.fifth_row.cost_label.grid(row=5, column=5)
 
         """ SIXTH ROW """
-
-        self.sixth_row_accepted_str = tk.StringVar()
-        self.sixth_row_driver_str = tk.StringVar()
-        self.sixth_row_date_str = tk.StringVar()
-        self.sixth_row_destination_str = tk.StringVar()
-        self.sixth_row_number_of_seats_str = tk.StringVar()
-        self.sixth_row_cost_MXN_str = tk.StringVar()
-
-        self.sixth_row_accepted_label = ttk.Label(
-            self,
-            textvariable=self.sixth_row_accepted_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-        )
-        self.sixth_row_driver_label = ttk.Label(
-            self,
-            textvariable=self.sixth_row_driver_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-        )
-        self.sixth_row_date_label = ttk.Label(
-            self,
-            textvariable=self.sixth_row_date_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.sixth_row_destination_label = ttk.Label(
-            self,
-            textvariable=self.sixth_row_destination_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.sixth_row_seats_label = ttk.Label(
-            self,
-            textvariable=self.sixth_row_number_of_seats_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.sixth_row_cost_label = ttk.Label(
-            self,
-            textvariable=self.sixth_row_cost_MXN_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-
-        self.sixth_row_accepted_label.config(anchor=CENTER)
-        self.sixth_row_driver_label.config(anchor=CENTER)
-        self.sixth_row_date_label.config(anchor=CENTER)
-        self.sixth_row_destination_label.config(anchor=CENTER)
-        self.sixth_row_seats_label.config(anchor=CENTER)
-        self.sixth_row_cost_label.config(anchor=CENTER)
-
-        self.sixth_row_accepted_label.grid(row=6, column=0)
-        self.sixth_row_driver_label.grid(row=6, column=1)
-        self.sixth_row_date_label.grid(row=6, column=2)
-        self.sixth_row_destination_label.grid(row=6, column=3)
-        self.sixth_row_seats_label.grid(row=6, column=4)
-        self.sixth_row_cost_label.grid(row=6, column=5)
+        self.sixth_row = FutureTravelRow(self)
+        
+        self.sixth_row.accepted_label.grid(row=5, column=0)
+        self.sixth_row.driver_label.grid(row=5, column=1)
+        self.sixth_row.date_label.grid(row=5, column=2)
+        self.sixth_row.destination_label.grid(row=5, column=3)
+        self.sixth_row.seats_label.grid(row=5, column=4)
+        self.sixth_row.cost_label.grid(row=5, column=5)
 
         """ SEVENTH ROW """
+        self.seventh_row = FutureTravelRow(self)
 
-        self.seventh_row_accepted_str = tk.StringVar()
-        self.seventh_row_driver_str = tk.StringVar()
-        self.seventh_row_date_str = tk.StringVar()
-        self.seventh_row_destination_str = tk.StringVar()
-        self.seventh_row_number_of_seats_str = tk.StringVar()
-        self.seventh_row_cost_MXN_str = tk.StringVar()
-
-        self.seventh_row_accepted_label = ttk.Label(
-            self,
-            textvariable=self.seventh_row_accepted_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-        )
-        self.seventh_row_driver_label = ttk.Label(
-            self,
-            textvariable=self.seventh_row_driver_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-        )
-        self.seventh_row_date_label = ttk.Label(
-            self,
-            textvariable=self.seventh_row_date_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.seventh_row_destination_label = ttk.Label(
-            self,
-            textvariable=self.seventh_row_destination_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.seventh_row_seats_label = ttk.Label(
-            self,
-            textvariable=self.seventh_row_number_of_seats_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.seventh_row_cost_label = ttk.Label(
-            self,
-            textvariable=self.seventh_row_cost_MXN_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-
-        self.seventh_row_accepted_label.config(anchor=CENTER)
-        self.seventh_row_driver_label.config(anchor=CENTER)
-        self.seventh_row_date_label.config(anchor=CENTER)
-        self.seventh_row_destination_label.config(anchor=CENTER)
-        self.seventh_row_seats_label.config(anchor=CENTER)
-        self.seventh_row_cost_label.config(anchor=CENTER)
-
-        self.seventh_row_accepted_label.grid(row=7, column=0)
-        self.seventh_row_driver_label.grid(row=7, column=1)
-        self.seventh_row_date_label.grid(row=7, column=2)
-        self.seventh_row_destination_label.grid(row=7, column=3)
-        self.seventh_row_seats_label.grid(row=7, column=4)
-        self.seventh_row_cost_label.grid(row=7, column=5)
+        self.seventh_row.accepted_label.grid(row=7, column=0)
+        self.seventh_row.driver_label.grid(row=7, column=1)
+        self.seventh_row.date_label.grid(row=7, column=2)
+        self.seventh_row.destination_label.grid(row=7, column=3)
+        self.seventh_row.seats_label.grid(row=7, column=4)
+        self.seventh_row.cost_label.grid(row=7, column=5)
 
         """ EIGTH ROW """
-
-        self.eigth_row_accepted_str = tk.StringVar()
-        self.eigth_row_driver_str = tk.StringVar()
-        self.eigth_row_date_str = tk.StringVar()
-        self.eigth_row_destination_str = tk.StringVar()
-        self.eigth_row_number_of_seats_str = tk.StringVar()
-        self.eigth_row_cost_MXN_str = tk.StringVar()
-
-        self.eigth_row_accepted_label = ttk.Label(
-            self,
-            textvariable=self.eigth_row_accepted_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-        )
-        self.eigth_row_driver_label = ttk.Label(
-            self,
-            textvariable=self.eigth_row_driver_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-        )
-        self.eigth_row_date_label = ttk.Label(
-            self,
-            textvariable=self.eigth_row_date_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.eigth_row_destination_label = ttk.Label(
-            self,
-            textvariable=self.eigth_row_destination_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.eigth_row_seats_label = ttk.Label(
-            self,
-            textvariable=self.eigth_row_number_of_seats_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.eigth_row_cost_label = ttk.Label(
-            self,
-            textvariable=self.eigth_row_cost_MXN_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-
-        self.eigth_row_accepted_label.config(anchor=CENTER)
-        self.eigth_row_driver_label.config(anchor=CENTER)
-        self.eigth_row_date_label.config(anchor=CENTER)
-        self.eigth_row_destination_label.config(anchor=CENTER)
-        self.eigth_row_seats_label.config(anchor=CENTER)
-        self.eigth_row_cost_label.config(anchor=CENTER)
-
-        self.eigth_row_accepted_label.grid(row=8, column=0)
-        self.eigth_row_driver_label.grid(row=8, column=1)
-        self.eigth_row_date_label.grid(row=8, column=2)
-        self.eigth_row_destination_label.grid(row=8, column=3)
-        self.eigth_row_seats_label.grid(row=8, column=4)
-        self.eigth_row_cost_label.grid(row=8, column=5)
+        self.eigth_row = FutureTravelRow(self)
+        
+        self.eigth_row.accepted_label.grid(row=7, column=0)
+        self.eigth_row.driver_label.grid(row=7, column=1)
+        self.eigth_row.date_label.grid(row=7, column=2)
+        self.eigth_row.destination_label.grid(row=7, column=3)
+        self.eigth_row.seats_label.grid(row=7, column=4)
+        self.eigth_row.cost_label.grid(row=7, column=5)
 
         """ NINTH ROW """
+        self.ninth_row = FutureTravelRow(self)
+        
+        self.ninth_row.accepted_label.grid(row=7, column=0)
+        self.ninth_row.driver_label.grid(row=7, column=1)
+        self.ninth_row.date_label.grid(row=7, column=2)
+        self.ninth_row.destination_label.grid(row=7, column=3)
+        self.ninth_row.seats_label.grid(row=7, column=4)
+        self.ninth_row.cost_label.grid(row=7, column=5)
 
-        self.ninth_row_accepted_str = tk.StringVar()
-        self.ninth_row_driver_str = tk.StringVar()
-        self.ninth_row_date_str = tk.StringVar()
-        self.ninth_row_destination_str = tk.StringVar()
-        self.ninth_row_number_of_seats_str = tk.StringVar()
-        self.ninth_row_cost_MXN_str = tk.StringVar()
-
-        self.ninth_row_accepted_label = ttk.Label(
-            self,
-            textvariable=self.ninth_row_accepted_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-        )
-        self.ninth_row_driver_label = ttk.Label(
-            self,
-            textvariable=self.ninth_row_driver_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-        )
-        self.ninth_row_date_label = ttk.Label(
-            self,
-            textvariable=self.ninth_row_date_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.ninth_row_destination_label = ttk.Label(
-            self,
-            textvariable=self.ninth_row_destination_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.ninth_row_seats_label = ttk.Label(
-            self,
-            textvariable=self.ninth_row_number_of_seats_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-        self.ninth_row_cost_label = ttk.Label(
-            self,
-            textvariable=self.ninth_row_cost_MXN_str,
-            style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
-
-        )
-
-        self.ninth_row_accepted_label.config(anchor=CENTER)
-        self.ninth_row_driver_label.config(anchor=CENTER)
-        self.ninth_row_date_label.config(anchor=CENTER)
-        self.ninth_row_destination_label.config(anchor=CENTER)
-        self.ninth_row_seats_label.config(anchor=CENTER)
-        self.ninth_row_cost_label.config(anchor=CENTER)
-
-        self.ninth_row_accepted_label.grid(row=9, column=0)
-        self.ninth_row_driver_label.grid(row=9, column=1)
-        self.ninth_row_date_label.grid(row=9, column=2)
-        self.ninth_row_destination_label.grid(row=9, column=3)
-        self.ninth_row_seats_label.grid(row=9, column=4)
-        self.ninth_row_cost_label.grid(row=9, column=5)
+        self.rows = [
+            self.fourth_row,
+            self.fifth_row,
+            self.sixth_row,
+            self.seventh_row,
+            self.eigth_row,
+            self.ninth_row,
+        ]
 
         self.update_rideshare_future_travels_rows()
 
     def clear_rows(self):
-        self.fourth_row_accepted_str.set("")
-        self.fourth_row_driver_str.set("")
-        self.fourth_row_date_str.set("")
-        self.fourth_row_destination_str.set("")
-        self.fourth_row_number_of_seats_str.set("")
-        self.fourth_row_cost_MXN_str.set("")
+        for row in self.rows:
+            row.clear_row()
 
-        self.fifth_row_accepted_str.set("")
-        self.fifth_row_driver_str.set("")
-        self.fifth_row_date_str.set("")
-        self.fifth_row_destination_str.set("")
-        self.fifth_row_number_of_seats_str.set("")
-        self.fifth_row_cost_MXN_str.set("")
-
-        self.sixth_row_accepted_str.set("")
-        self.sixth_row_driver_str.set("")
-        self.sixth_row_date_str.set("")
-        self.sixth_row_destination_str.set("")
-        self.sixth_row_number_of_seats_str.set("")
-        self.sixth_row_cost_MXN_str.set("")
-
-        self.seventh_row_accepted_str.set("")
-        self.seventh_row_driver_str.set("")
-        self.seventh_row_date_str.set("")
-        self.seventh_row_destination_str.set("")
-        self.seventh_row_number_of_seats_str.set("")
-        self.seventh_row_cost_MXN_str.set("")
-
-        self.eigth_row_accepted_str.set("")
-        self.eigth_row_driver_str.set("")
-        self.eigth_row_date_str.set("")
-        self.eigth_row_destination_str.set("")
-        self.eigth_row_number_of_seats_str.set("")
-        self.eigth_row_cost_MXN_str.set("")
-
-        self.ninth_row_accepted_str.set("")
-        self.ninth_row_driver_str.set("")
-        self.ninth_row_date_str.set("")
-        self.ninth_row_destination_str.set("")
-        self.ninth_row_number_of_seats_str.set("")
-        self.ninth_row_cost_MXN_str.set("")
 
     def update_rideshare_future_travels_rows(self):
         self.clear_rows()
-        # Esto se puede hacer más eficientemente, estoy seguro.
         for index, ride in enumerate(settings.g_rideshare_future_travels):
-            if index == 0:
-                self.fourth_row_accepted_str.set("✓")
-                self.fourth_row_driver_str.set(ride.name)
-                self.fourth_row_date_str.set(ride.date)
-                self.fourth_row_destination_str.set(ride.destination)
-                self.fourth_row_number_of_seats_str.set(ride.number_of_seats)
-                self.fourth_row_cost_MXN_str.set(ride.cost_MXN)
-            if index == 1:
-                self.fifth_row_accepted_str.set("✓")
-                self.fifth_row_driver_str.set(ride.name)
-                self.fifth_row_date_str.set(ride.date)
-                self.fifth_row_destination_str.set(ride.destination)
-                self.fifth_row_number_of_seats_str.set(ride.number_of_seats)
-                self.fifth_row_cost_MXN_str.set(ride.cost_MXN)
-            if index == 2:
-                self.sixth_row_accepted_str.set("✓")
-                self.sixth_row_driver_str.set(ride.name)
-                self.sixth_row_date_str.set(ride.date)
-                self.sixth_row_destination_str.set(ride.destination)
-                self.sixth_row_number_of_seats_str.set(ride.number_of_seats)
-                self.sixth_row_cost_MXN_str.set(ride.cost_MXN)
-            if index == 3:
-                self.seventh_row_accepted_str.set("✓")
-                self.seventh_row_driver_str.set(ride.name)
-                self.seventh_row_date_str.set(ride.date)
-                self.seventh_row_destination_str.set(ride.destination)
-                self.seventh_row_number_of_seats_str.set(ride.number_of_seats)
-                self.seventh_row_cost_MXN_str.set(ride.cost_MXN)
-            if index == 4:
-                self.eigth_row_accepted_str.set("✓")
-                self.eigth_row_driver_str.set(ride.name)
-                self.eigth_row_date_str.set(ride.date)
-                self.eigth_row_destination_str.set(ride.destination)
-                self.eigth_row_number_of_seats_str.set(ride.number_of_seats)
-                self.eigth_row_cost_MXN_str.set(ride.cost_MXN)
-            if index == 5:
-                self.ninth_row_accepted_str.set("✓")
-                self.ninth_row_driver_str.set(ride.name)
-                self.ninth_row_date_str.set(ride.date)
-                self.ninth_row_destination_str.set(ride.destination)
-                self.ninth_row_number_of_seats_str.set(ride.number_of_seats)
-                self.ninth_row_cost_MXN_str.set(ride.cost_MXN)
+            current_row = self.rows[index] 
+            current_row.accepted_str.set("✓")
+            current_row.driver_str.set(ride.name)
+            current_row.date_str.set(ride.date)
+            current_row.destination_str.set(ride.destination)
+            current_row.number_of_seats_str.set(ride.number_of_seats)
+            current_row.cost_MXN_str.set(ride.cost_MXN)
+            

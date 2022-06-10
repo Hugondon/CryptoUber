@@ -1,7 +1,7 @@
 import settings
 import tkinter as tk
 
-from tkinter import CENTER, ttk
+from tkinter import CENTER, ttk, Toplevel
 from frames.const import *
 from PIL import ImageTk, Image
 from utils.example_drivers import *
@@ -29,7 +29,7 @@ class OfferRow(ttk.Frame):
         self.destination_str = tk.StringVar()
         self.number_of_seats_str = tk.StringVar()
         self.cost_MXN_str = tk.StringVar()
-
+        
         self.driver_label = ttk.Label(
             parent,
             textvariable=self.driver_str,
@@ -64,6 +64,7 @@ class OfferRow(ttk.Frame):
             style="OffersNormalText.TLabel",
             padding=(0, 0, 5, 0)
         )
+        
 
         self.driver_label.config(anchor=CENTER)
         self.date_label.config(anchor=CENTER)
@@ -73,7 +74,134 @@ class OfferRow(ttk.Frame):
 
         
     def checkbox_clicked(self):
-        self.parent.delete_driver(self.index)
+        
+        def callbacK_accept_offer():
+            self.parent.delete_driver(self.index)
+            offer_window.destroy()
+            
+        def callbacK_cancel_offer():
+            offer_window.destroy()
+            
+        def callbacK_dismiss_offer():
+            self.parent.delete_driver(self.index)
+            offer_window.destroy()
+        
+        WIDTH, HEIGHT = 400,260
+        offer_window= Toplevel(self, bg=COLOR_OFFER_SELECTION_BACKGROUND)
+        
+        offer_window.title("New Offer Selected")
+        offer_window.geometry(f"{WIDTH}x{HEIGHT}")
+        offer_window.iconbitmap(self.parent.controller.ICON_ICO_PATH)
+        
+        container = ttk.Frame(offer_window, style="OfferSelectionFrame.TFrame")
+        container.grid(row=0, column=0, sticky="NSEW")
+        
+        # print(self.driver_str.get())
+        
+        """ LAYOUT """
+        title_frame = ttk.Frame(
+            container,
+            style="OfferSelectionFrame.TFrame"
+        )
+        
+        information_frame = ttk.Frame(
+            container,
+            style="OfferSelectionFrame.TFrame"
+        )
+        
+        timer_frame = ttk.Frame(
+            container,
+            style="OfferSelectionFrame.TFrame"
+        )
+                
+        buttons_frame = ttk.Frame(
+            container,
+            style="OfferSelectionFrame.TFrame"
+        )
+
+        title_label = ttk.Label(title_frame,
+                            text= "New Offer Selected",
+                            style="OfferSelectionTitle2.TLabel",
+                            )
+        title_label.grid(column=0, row=0, sticky="W") 
+
+        driver_name_label = ttk.Label(information_frame,
+                            text= "Driver: ",
+                            style="OfferSelectionText.TLabel",
+                            )
+
+        account_label = ttk.Label(information_frame,
+                            text= "Account: ",
+                            style="OfferSelectionText.TLabel",
+                            )
+        driver_name_text = ttk.Label(information_frame,
+                            text= "Andres",
+                            style="OfferSelectionText.TLabel",
+                            )
+        account_text = ttk.Label(information_frame,
+                            text= "0x12",
+                            style="OfferSelectionText.TLabel",
+                            )
+        
+        driver_name_label.grid(column=0, row=0, sticky="W")
+        driver_name_text.grid(column=1, row=0, sticky="W")
+        
+        account_label.grid(column=0, row=1, sticky="W")
+        account_text.grid(column=1, row=1, sticky="W")
+        
+        expire_label = ttk.Label(timer_frame,
+                            text= "Expires in: ",
+                            style="OfferSelectionText.TLabel",
+                            )
+        time_label = ttk.Label(timer_frame,
+                            text= "5",
+                            style="OfferSelectionText.TLabel",
+                            )
+        units_label =  ttk.Label(timer_frame,
+                            text= " seconds",
+                            style="OfferSelectionText.TLabel",
+                            )
+        
+        expire_label.grid(row=0, column=0, sticky="W")
+        time_label.grid(row=0, column=1, sticky="W")
+        units_label.grid(row=0, column=2, sticky="W")
+
+        accept_button = ttk.Button(
+            buttons_frame,
+            text="Accept",
+            command=callbacK_accept_offer,
+            style="OfferSelectionButton.TButton",
+            width=10,
+            cursor="hand2"
+        )
+        cancel_button = ttk.Button(
+            buttons_frame,
+            text="Cancel",
+            command=callbacK_cancel_offer,
+            style="OfferSelectionButton.TButton",
+            width=10,
+            cursor="hand2"
+        )
+        dismiss_button = ttk.Button(
+            buttons_frame,
+            text="Dismiss",
+            command=callbacK_dismiss_offer,
+            style="OfferSelectionButton.TButton",
+            width=10,
+            cursor="hand2"
+        )
+        
+        accept_button.grid(column=0, row=0, sticky="W", padx=(0, 20))
+        cancel_button.grid(column=1, row=0, sticky="W", padx=(0, 20))
+        dismiss_button.grid(column=2, row=0, sticky="W", padx=(0, 20))
+        
+        
+        title_frame.grid(row=0, column=0, padx=(20, 0), pady=(20, 10))
+        information_frame.grid(row=1, column=0, padx=(10,0), pady=(0, 30))
+        timer_frame.grid(row=2, column=0, padx=(30,0), pady=(0, 30))
+        buttons_frame.grid(row=3, column=0, padx=(40,0), pady=(0, 30))
+        
+        
         
     def clear_row(self):
         self.driver_str.set("")
@@ -86,6 +214,15 @@ class OfferRow(ttk.Frame):
             self.checkbox.grid_remove()
             self.active = False
             
+    # def update_timer(self):
+    #     if(self.active):
+    #         new_count = self.timer_int.get() - 1
+    #         self.timer_int.set(new_count)
+    #         if(self.timer_int.get() == 0):
+    #             self.active = False
+    #         self.timer_label.after(1000, self.update_timer)
+            
+    
 class Offers(ttk.Frame):
 
     def __init__(self, parent, controller, style):
@@ -97,14 +234,20 @@ class Offers(ttk.Frame):
         """ LAYOUT CONFIGURATION """
 
         """ FIRST ROW """
-        offers_label = ttk.Label(
+        title_frame = ttk.Frame(
             self,
+            style="OffersFrame.TFrame"
+        )
+        
+        offers_label = ttk.Label(
+            title_frame,
             text="Rideshare Offers",
             style="OffersTitle2.TLabel"
         )
-
-        offers_label.grid(row=0, column=0, columnspan=6, sticky="EW",
-                          padx=(200, 200), pady=(5, 0))
+        offers_label.grid(row=0, column=0, sticky="EW")
+        
+        title_frame.grid(row=0, column=0, columnspan=7, sticky="EW",
+                          padx=(200, 0), pady=(5, 0))
 
         """ SECOND ROW """
         car_img = ImageTk.PhotoImage(Image.open(self.controller.CAR_PNG_PATH).resize(
@@ -135,12 +278,14 @@ class Offers(ttk.Frame):
         money_panel = ttk.Label(self, image=money_img,
                                 style="OffersLabel.TLabel")
         money_panel.image = money_img
+        
 
         car_panel.grid(row=1, column=1, sticky="NS", pady=(5, 0))
         clock_panel.grid(row=1, column=2, sticky="NS", pady=(5, 0))
         placeholder_panel.grid(row=1, column=3, sticky="NS", pady=(5, 0))
         seats_panel.grid(row=1, column=4, sticky="NS", pady=(5, 0))
         money_panel.grid(row=1, column=5, sticky="NS", pady=(5, 0))
+        
         """ THIRD ROW """
         selection_label = ttk.Label(
             self,
@@ -158,7 +303,7 @@ class Offers(ttk.Frame):
         )
         date_time_label = ttk.Label(
             self,
-            text="Date & Time",
+            text="Time",
             style="OffersTitle3.TLabel",
             padding=(10, 5, 5, 0)
         )
@@ -176,10 +321,12 @@ class Offers(ttk.Frame):
         )
         cost_MXN_label = ttk.Label(
             self,
-            text="Cost MXN",
+            text="Cost Eth",
             style="OffersTitle3.TLabel",
             padding=(10, 5, 5, 0)
         )
+        
+        
         selection_label.config(anchor=CENTER)
         driver_label.config(anchor=CENTER)
         date_time_label.config(anchor=CENTER)
@@ -197,7 +344,7 @@ class Offers(ttk.Frame):
         seats_number_label.grid(row=2, column=4, sticky="EW")
         cost_MXN_label.grid(row=2, column=5, sticky="EW")
         
-        table_separator.grid(row=3, columnspan=6, padx=(10, 5), sticky="EW")
+        table_separator.grid(row=3, columnspan=7, padx=(10, 5), sticky="EW")
 
         """ FOURTH ROW """
         self.fourth_row = OfferRow(self, index=0)
@@ -275,58 +422,14 @@ class Offers(ttk.Frame):
             return
         
         for index, ride in enumerate(settings.g_rideshare_offers):
-            if index == 0:
-                self.fourth_row.driver_str.set(ride.name)
-                self.fourth_row.date_str.set(ride.date)
-                self.fourth_row.destination_str.set(ride.destination)
-                self.fourth_row.number_of_seats_str.set(ride.number_of_seats)
-                self.fourth_row.cost_MXN_str.set(ride.cost_MXN)
-                self.fourth_row.active = True
-                # self.fourth_row.checkbox.grid(row=4, column=0)
-                current_checkbox = self.fourth_row.checkbox
-                current_checkbox.grid(row=4, column=0)
-
-            if index == 1:
-                self.fifth_row.driver_str.set(ride.name)
-                self.fifth_row.date_str.set(ride.date)
-                self.fifth_row.destination_str.set(ride.destination)
-                self.fifth_row.number_of_seats_str.set(ride.number_of_seats)
-                self.fifth_row.cost_MXN_str.set(ride.cost_MXN)
-                self.fifth_row.active = True
-                self.fifth_row.checkbox.grid(row=5, column=0)
-            if index == 2:
-                self.sixth_row.driver_str.set(ride.name)
-                self.sixth_row.date_str.set(ride.date)
-                self.sixth_row.destination_str.set(ride.destination)
-                self.sixth_row.number_of_seats_str.set(ride.number_of_seats)
-                self.sixth_row.cost_MXN_str.set(ride.cost_MXN)
-                self.sixth_row.active = True
-                self.sixth_row.checkbox.grid(row=6, column=0)
-
-            if index == 3:
-                self.seventh_row.driver_str.set(ride.name)
-                self.seventh_row.date_str.set(ride.date)
-                self.seventh_row.destination_str.set(ride.destination)
-                self.seventh_row.number_of_seats_str.set(ride.number_of_seats)
-                self.seventh_row.cost_MXN_str.set(ride.cost_MXN)
-                self.seventh_row.active = True
-                self.seventh_row.checkbox.grid(row=7, column=0)
-            if index == 4:
-                self.eigth_row.driver_str.set(ride.name)
-                self.eigth_row.date_str.set(ride.date)
-                self.eigth_row.destination_str.set(ride.destination)
-                self.eigth_row.number_of_seats_str.set(ride.number_of_seats)
-                self.eigth_row.cost_MXN_str.set(ride.cost_MXN)
-                self.eigth_row.active = True
-                self.eigth_row.checkbox.grid(row=8, column=0)
-            if index == 5:
-                self.ninth_row.driver_str.set(ride.name)
-                self.ninth_row.date_str.set(ride.date)
-                self.ninth_row.destination_str.set(ride.destination)
-                self.ninth_row.number_of_seats_str.set(ride.number_of_seats)
-                self.ninth_row.cost_MXN_str.set(ride.cost_MXN)
-                self.ninth_row.active = True
-                self.ninth_row.checkbox.grid(row=9, column=0)
+            current_row = self.rows[index] 
+            current_row.driver_str.set(ride.name)
+            current_row.date_str.set(ride.date)
+            current_row.destination_str.set(ride.destination)
+            current_row.number_of_seats_str.set(ride.number_of_seats)
+            current_row.cost_MXN_str.set(ride.cost_MXN)
+            current_row.active = True
+            current_row.checkbox.grid(row=index + 4, column=0)  # Offset por posicion inicials
 
     def delete_driver(self, deleted_driver_index):
         self.clear_rows()
@@ -334,56 +437,17 @@ class Offers(ttk.Frame):
             return
         
         selected_driver = settings.g_rideshare_offers.pop(deleted_driver_index)
+        selected_driver.selected = True
         settings.g_rideshare_future_travels.append(selected_driver)
         self.controller.future_travels_frame.update_rideshare_future_travels_rows()
         
-        for index, ride in enumerate(settings.g_rideshare_offers):
-            if index == 0:
-                self.fourth_row.driver_str.set(ride.name)
-                self.fourth_row.date_str.set(ride.date)
-                self.fourth_row.destination_str.set(ride.destination)
-                self.fourth_row.number_of_seats_str.set(ride.number_of_seats)
-                self.fourth_row.cost_MXN_str.set(ride.cost_MXN)
-                self.fourth_row.active = True
-                self.fourth_row.checkbox.grid(row=4, column=0)
-            if index == 1:
-                self.fifth_row.driver_str.set(ride.name)
-                self.fifth_row.date_str.set(ride.date)
-                self.fifth_row.destination_str.set(ride.destination)
-                self.fifth_row.number_of_seats_str.set(ride.number_of_seats)
-                self.fifth_row.cost_MXN_str.set(ride.cost_MXN)
-                self.fifth_row.active = True
-                self.fifth_row.checkbox.grid(row=5, column=0)
-            if index == 2:
-                self.sixth_row.driver_str.set(ride.name)
-                self.sixth_row.date_str.set(ride.date)
-                self.sixth_row.destination_str.set(ride.destination)
-                self.sixth_row.number_of_seats_str.set(ride.number_of_seats)
-                self.sixth_row.cost_MXN_str.set(ride.cost_MXN)
-                self.sixth_row.active = True
-                self.sixth_row.checkbox.grid(row=6, column=0)
 
-            if index == 3:
-                self.seventh_row.driver_str.set(ride.name)
-                self.seventh_row.date_str.set(ride.date)
-                self.seventh_row.destination_str.set(ride.destination)
-                self.seventh_row.number_of_seats_str.set(ride.number_of_seats)
-                self.seventh_row.cost_MXN_str.set(ride.cost_MXN)
-                self.seventh_row.active = True
-                self.seventh_row.checkbox.grid(row=7, column=0)
-            if index == 4:
-                self.eigth_row.driver_str.set(ride.name)
-                self.eigth_row.date_str.set(ride.date)
-                self.eigth_row.destination_str.set(ride.destination)
-                self.eigth_row.number_of_seats_str.set(ride.number_of_seats)
-                self.eigth_row.cost_MXN_str.set(ride.cost_MXN)
-                self.eigth_row.active = True
-                self.eigth_row.checkbox.grid(row=8, column=0)
-            if index == 5:
-                self.ninth_row.driver_str.set(ride.name)
-                self.ninth_row.date_str.set(ride.date)
-                self.ninth_row.destination_str.set(ride.destination)
-                self.ninth_row.number_of_seats_str.set(ride.number_of_seats)
-                self.ninth_row.cost_MXN_str.set(ride.cost_MXN)
-                self.ninth_row.active = True
-                self.ninth_row.checkbox.grid(row=9, column=0)
+        for index, ride in enumerate(settings.g_rideshare_offers):
+            current_row = self.rows[index] 
+            current_row.driver_str.set(ride.name)
+            current_row.date_str.set(ride.date)
+            current_row.destination_str.set(ride.destination)
+            current_row.number_of_seats_str.set(ride.number_of_seats)
+            current_row.cost_MXN_str.set(ride.cost_MXN)
+            current_row.active = True
+            current_row.checkbox.grid(row=index + 4, column=0) # Offset por posicion inicials

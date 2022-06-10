@@ -6,11 +6,18 @@ from tkinter import CENTER, ttk, Menu
 
 from frames import Offers, Profile, FutureTravels
 from frames.const import *
+from web3 import Web3
 
 
 class RideSharing(tk.Tk):
 
-    WIDTH, HEIGHT = 700,650
+    WIDTH, HEIGHT = 1030,700
+    
+    COLUMN_1_WIDTH = 500
+    COLUMN_2_WIDTH = WIDTH - COLUMN_1_WIDTH
+    
+    ROW_1_HEIGHT = 300
+    ROW_2_HEIGHT = HEIGHT - ROW_1_HEIGHT
     
     README_PATH = 'README.md'
     CAR_PNG_PATH = "imgs/car.png"
@@ -18,13 +25,16 @@ class RideSharing(tk.Tk):
     MONEY_PNG_PATH = "imgs/money.png"
     PLACEHOLDER_PNG_PATH = "imgs/placeholder.png"
     SEATS_PNG_PATH = "imgs/seats.png"
+    
     ICON_ICO_PATH = "imgs/R.ico"
+
+    GANACHE_URL = "http://127.0.0.1:7545"
 
     PNG_WIDTH, PNG_HEIGHT = 512, 512
     PNG_RESIZE_FACTOR = 26
     
-    
 
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -49,6 +59,8 @@ class RideSharing(tk.Tk):
                         background=COLOR_OFFERS_BACKGROUND)
         style.configure("NewOfferFrame.TFrame",
                         background=COLOR_NEW_OFFER_BACKGROUND)
+        style.configure("OfferSelectionFrame.TFrame",
+                        background=COLOR_OFFER_SELECTION_BACKGROUND)
 
         """ Rideshare Offers Frame Styles """
         style.configure(
@@ -159,6 +171,36 @@ class RideSharing(tk.Tk):
             relief="raised",
             font=("Segoe UI", 10),
         )
+
+        """ Offer Selection Frame Styles """
+        style.configure(
+            "OfferSelectionTitle2.TLabel",
+            background=COLOR_OFFER_SELECTION_BACKGROUND,
+            foreground=OFFER_SELECTION_COLOR_TITLE_2_TEXT,
+            font=("Segoe UI", 16, 'bold')
+        )
+        style.configure(
+            "OfferSelectionTitle3.TLabel",
+            background=COLOR_OFFER_SELECTION_BACKGROUND,
+            foreground=OFFER_SELECTION_COLOR_TITLE_2_TEXT,
+            font=("Segoe UI", 12, 'bold')
+        )
+
+        style.configure(
+            "OfferSelectionText.TLabel",
+            background=COLOR_OFFER_SELECTION_BACKGROUND,
+            foreground=OFFER_SELECTION_COLOR_NORMAL_TEXT,
+            font=("Segoe UI", 12)
+        )
+        
+        style.configure(
+            "OfferSelectionButton.TButton",
+            background=COLOR_OFFER_SELECTION_BUTTON_BACKGROUND,
+            foreground=OFFER_SELECTION_COLOR_NORMAL_TEXT,
+            relief="raised",
+            font=("Segoe UI", 10),
+        )
+
         
         
         """ Attributes  """
@@ -167,17 +209,24 @@ class RideSharing(tk.Tk):
         self.geometry(f"{self.WIDTH}x{self.HEIGHT}")
         self["background"] = COLOR_APP_BACKGROUND
         self.iconbitmap(self.ICON_ICO_PATH)
+        
+        
+        """ Ganache """
+        self.web3 = Web3(Web3.HTTPProvider(self.GANACHE_URL))
+        self.web3.eth.defaultAccount=self.web3.eth.accounts[0]
+        
+        
         """ LAYOUT CONFIGURATION """
         self.columnconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
 
         container = ttk.Frame(self, style="AppFrame.TFrame")
         container.grid(row=0, column=0, sticky="NSEW")
-        container.columnconfigure(0, minsize=550, weight=1)
-        container.columnconfigure(1, minsize=200, weight=1)
+        container.columnconfigure(0, minsize=self.COLUMN_1_WIDTH, weight=1)
+        container.columnconfigure(1, minsize=self.COLUMN_2_WIDTH, weight=1)
 
-        container.rowconfigure(1, minsize=300, weight=1)
-        container.rowconfigure(2, minsize=300, weight=1)
+        container.rowconfigure(1, minsize=self.ROW_1_HEIGHT, weight=1)
+        container.rowconfigure(2, minsize=self.ROW_2_HEIGHT, weight=1)
         ridesharing_title_label = ttk.Label(
             container,
             text="Ridesharing",
