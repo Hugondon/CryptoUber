@@ -1,7 +1,7 @@
 import settings
 import tkinter as tk
 
-from tkinter import CENTER, ttk, Toplevel
+from tkinter import ACTIVE, CENTER, DISABLED, ttk, Toplevel, messagebox
 from frames.const import *
 from PIL import ImageTk, Image
 from utils.example_drivers import *
@@ -29,6 +29,9 @@ class OfferRow(ttk.Frame):
         self.destination_str = tk.StringVar()
         self.number_of_seats_str = tk.StringVar()
         self.cost_MXN_str = tk.StringVar()
+        self.cost_MXN = 0;
+        
+        self.account_str = ""
         
         self.driver_label = ttk.Label(
             parent,
@@ -75,18 +78,39 @@ class OfferRow(ttk.Frame):
         
     def checkbox_clicked(self):
         
-        def callbacK_accept_offer():
-            self.parent.delete_driver(self.index)
+        def callback_accept_offer():
+            self.checkbox_value.set(False)
+            self.parent.enable_checkbuttons()
+            
+            if(self.parent.controller.current_user.withdraw_from_account(amount=self.cost_MXN)):
+                self.parent.delete_driver(self.index)
+                offer_window.destroy()
+            else:    
+                messagebox.showerror(
+                    message=f"Insufficient Funds!",
+                    title="Error"
+                )
+            
+        def callback_cancel_offer():
+            self.checkbox_value.set(False)
+            self.parent.enable_checkbuttons()
             offer_window.destroy()
             
-        def callbacK_cancel_offer():
+        def callback_dismiss_offer():
+            self.checkbox_value.set(False)
+            self.parent.enable_checkbuttons()
+            self.parent.delete_driver(self.index, offer_was_accepted=False)
             offer_window.destroy()
             
-        def callbacK_dismiss_offer():
-            self.parent.delete_driver(self.index)
-            offer_window.destroy()
-        
-        WIDTH, HEIGHT = 400,260
+        def update_timer():
+            if(expiration_time_s.get() == 0):
+                self.parent.delete_driver(self.index, offer_was_accepted=False)
+                offer_window.destroy()
+            else:
+                expiration_time_s.set(expiration_time_s.get() - 1)
+                time_label.after(1000, update_timer)
+
+        WIDTH, HEIGHT = 460,260
         offer_window= Toplevel(self, bg=COLOR_OFFER_SELECTION_BACKGROUND)
         
         offer_window.title("New Offer Selected")
@@ -95,8 +119,9 @@ class OfferRow(ttk.Frame):
         
         container = ttk.Frame(offer_window, style="OfferSelectionFrame.TFrame")
         container.grid(row=0, column=0, sticky="NSEW")
-        
-        # print(self.driver_str.get())
+
+        expiration_time_s = tk.IntVar(value=10)        
+        self.parent.disable_checkbuttons(self.index)
         
         """ LAYOUT """
         title_frame = ttk.Frame(
@@ -135,11 +160,11 @@ class OfferRow(ttk.Frame):
                             style="OfferSelectionText.TLabel",
                             )
         driver_name_text = ttk.Label(information_frame,
-                            text= "Andres",
+                            textvariable=self.driver_str,
                             style="OfferSelectionText.TLabel",
                             )
         account_text = ttk.Label(information_frame,
-                            text= "0x12",
+                            text=self.account_str,
                             style="OfferSelectionText.TLabel",
                             )
         
@@ -153,10 +178,13 @@ class OfferRow(ttk.Frame):
                             text= "Expires in: ",
                             style="OfferSelectionText.TLabel",
                             )
+
+        
         time_label = ttk.Label(timer_frame,
-                            text= "5",
+                            textvariable=expiration_time_s,
                             style="OfferSelectionText.TLabel",
                             )
+        time_label.after(1000, update_timer)
         units_label =  ttk.Label(timer_frame,
                             text= " seconds",
                             style="OfferSelectionText.TLabel",
@@ -169,7 +197,7 @@ class OfferRow(ttk.Frame):
         accept_button = ttk.Button(
             buttons_frame,
             text="Accept",
-            command=callbacK_accept_offer,
+            command=callback_accept_offer,
             style="OfferSelectionButton.TButton",
             width=10,
             cursor="hand2"
@@ -177,7 +205,7 @@ class OfferRow(ttk.Frame):
         cancel_button = ttk.Button(
             buttons_frame,
             text="Cancel",
-            command=callbacK_cancel_offer,
+            command=callback_cancel_offer,
             style="OfferSelectionButton.TButton",
             width=10,
             cursor="hand2"
@@ -185,7 +213,7 @@ class OfferRow(ttk.Frame):
         dismiss_button = ttk.Button(
             buttons_frame,
             text="Dismiss",
-            command=callbacK_dismiss_offer,
+            command=callback_dismiss_offer,
             style="OfferSelectionButton.TButton",
             width=10,
             cursor="hand2"
@@ -195,13 +223,10 @@ class OfferRow(ttk.Frame):
         cancel_button.grid(column=1, row=0, sticky="W", padx=(0, 20))
         dismiss_button.grid(column=2, row=0, sticky="W", padx=(0, 20))
         
-        
-        title_frame.grid(row=0, column=0, padx=(20, 0), pady=(20, 10))
-        information_frame.grid(row=1, column=0, padx=(10,0), pady=(0, 30))
+        title_frame.grid(row=0, column=0, padx=(20, 0), pady=(20, 20))
+        information_frame.grid(row=1, column=0, padx=(10,0), pady=(0, 20))
         timer_frame.grid(row=2, column=0, padx=(30,0), pady=(0, 30))
-        buttons_frame.grid(row=3, column=0, padx=(40,0), pady=(0, 30))
-        
-        
+        buttons_frame.grid(row=3, column=0, padx=(40,0), pady=(0, 20))
         
     def clear_row(self):
         self.driver_str.set("")
@@ -209,19 +234,13 @@ class OfferRow(ttk.Frame):
         self.destination_str.set("")
         self.number_of_seats_str.set("")
         self.cost_MXN_str.set("")
+        self.cost_MXN = 0
         self.checkbox.grid_remove()
         if(self.active):
             self.checkbox.grid_remove()
             self.active = False
             
-    # def update_timer(self):
-    #     if(self.active):
-    #         new_count = self.timer_int.get() - 1
-    #         self.timer_int.set(new_count)
-    #         if(self.timer_int.get() == 0):
-    #             self.active = False
-    #         self.timer_label.after(1000, self.update_timer)
-            
+
     
 class Offers(ttk.Frame):
 
@@ -411,6 +430,15 @@ class Offers(ttk.Frame):
         
         self.update_driver_offer_rows()
 
+    def enable_checkbuttons(self):
+        for row in self.rows:
+            row.checkbox.config(state=ACTIVE)
+                
+    def disable_checkbuttons(self, enabled_checkbutton_index):
+        for index, row in enumerate(self.rows):
+            if(enabled_checkbutton_index != index):
+                row.checkbox.config(state=DISABLED)
+
     def clear_rows(self):
         for row in self.rows:
             row.clear_row()
@@ -428,18 +456,22 @@ class Offers(ttk.Frame):
             current_row.destination_str.set(ride.destination)
             current_row.number_of_seats_str.set(ride.number_of_seats)
             current_row.cost_MXN_str.set(ride.cost_MXN)
+            current_row.cost_MXN = ride.cost_MXN
+            current_row.account_str = ride.account.id
             current_row.active = True
             current_row.checkbox.grid(row=index + 4, column=0)  # Offset por posicion inicials
 
-    def delete_driver(self, deleted_driver_index):
+    def delete_driver(self, deleted_driver_index, offer_was_accepted=True):
         self.clear_rows()
         if not settings.g_rideshare_offers:
             return
         
         selected_driver = settings.g_rideshare_offers.pop(deleted_driver_index)
         selected_driver.selected = True
-        settings.g_rideshare_future_travels.append(selected_driver)
-        self.controller.future_travels_frame.update_rideshare_future_travels_rows()
+        
+        if offer_was_accepted:
+            settings.g_rideshare_future_travels.append(selected_driver)
+            self.controller.future_travels_frame.update_rideshare_future_travels_rows()
         
 
         for index, ride in enumerate(settings.g_rideshare_offers):
@@ -449,5 +481,7 @@ class Offers(ttk.Frame):
             current_row.destination_str.set(ride.destination)
             current_row.number_of_seats_str.set(ride.number_of_seats)
             current_row.cost_MXN_str.set(ride.cost_MXN)
+            current_row.cost_MXN = ride.cost_MXN
+            current_row.account_str = ride.account.id
             current_row.active = True
             current_row.checkbox.grid(row=index + 4, column=0) # Offset por posicion inicials

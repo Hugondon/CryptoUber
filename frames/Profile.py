@@ -44,16 +44,6 @@ class Profile(ttk.Frame):
         
 
         """ THIRD ROW """
-        current_user_account = CryptoAccount(
-            id=tk.StringVar(value="0x077c6c3ca8F3bAf37159A5b198c69e5562574042"),
-            balance_eth=tk.IntVar(value=100),
-            public_key=tk.StringVar(value="14baa5d10aaa0bfc836a427595c82037e74c467823fd214f0d007be2786246a5")
-        )
-        
-        self.current_user = User(
-            name=tk.StringVar(value="Juanito"),
-            account=current_user_account
-        )
         
         information_frame = ttk.Frame(
             self,
@@ -78,17 +68,17 @@ class Profile(ttk.Frame):
 
         name_text = ttk.Label(
             information_frame,
-            textvariable=self.current_user.name,
+            textvariable=self.controller.current_user.name,
             style="ProfileInformation.TLabel"
         )
         id_text = ttk.Label(
             information_frame,
-            textvariable=self.current_user.account.id,
+            textvariable=self.controller.current_user.account.id,
             style="ProfileInformation.TLabel"
         )
         balance_text = ttk.Label(
             information_frame,
-            textvariable=self.current_user.account.balance_eth,
+            textvariable=self.controller.current_user.account.balance_eth,
             style="ProfileInformation.TLabel"
         )
         
@@ -116,14 +106,6 @@ class Profile(ttk.Frame):
             width=15,
             cursor="hand2"
         )
-        update_balance_button = ttk.Button(
-            buttons_frame,
-            text="Update Balance",
-            command=self.callback_updating_balance,
-            style="ProfileInformationButton.TButton",
-            width=15,
-            cursor="hand2"
-        )
         edit_profile_button = ttk.Button(
             buttons_frame,
             text="Edit Profile",
@@ -134,8 +116,7 @@ class Profile(ttk.Frame):
         )
         
         add_offer_button.grid(row=0, column=0, sticky="S", pady=(0,25))
-        update_balance_button.grid(row=1, column=0, sticky="S", pady=(0, 25))
-        edit_profile_button.grid(row=2, column=0, sticky="S", pady=(0,25))
+        edit_profile_button.grid(row=1, column=0, sticky="S", pady=(0,25))
         
         buttons_frame.grid(row=3, column=0, sticky="EW", padx=(120+0.35*self.JPG_WIDTH//self.JPG_RESIZE_REFACTOR, 0), pady=(50, 10))  
 
@@ -404,18 +385,7 @@ class Profile(ttk.Frame):
         eta_scale.grid(column=2, row=6, pady=(0,20), sticky="W")
         max_num_of_passengers_spinbox.grid(column=2, row=7, pady=(0,20), sticky="W")
         price_spinbox.grid(column=2, row=8, pady=(0,20), sticky="W")
-        
-    
-    
-    def callback_updating_balance(self):
-        if(self.current_user.withdraw_from_account(amount=100)):
-            print("VALID")
-        else:
-            print("NOT VALID")
-        # send_transaction Transaccion falsa :D
-        
-        # IMPRIMIR DE ALGUNA FORMA EL RECIBO :)
-    
+            
     def callback_edit_profile(self):
         WIDTH, HEIGHT = 700,250
         

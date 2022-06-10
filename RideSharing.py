@@ -1,12 +1,14 @@
 import settings
 import tkinter as tk
 import os
+import webbrowser
 
 from tkinter import CENTER, ttk, Menu
 
 from frames import Offers, Profile, FutureTravels
 from frames.const import *
 from web3 import Web3
+from utils import CryptoAccount, User
 
 
 class RideSharing(tk.Tk):
@@ -29,6 +31,8 @@ class RideSharing(tk.Tk):
     ICON_ICO_PATH = "imgs/R.ico"
 
     GANACHE_URL = "http://127.0.0.1:7545"
+    HUGONDON_INSTAGRAM = "https://www.instagram.com/Hugondon/"
+    SOFI_SOLUV_INSTAGRAM = "https://www.instagram.com/_sofisoluv_/"
 
     PNG_WIDTH, PNG_HEIGHT = 512, 512
     PNG_RESIZE_FACTOR = 26
@@ -210,6 +214,16 @@ class RideSharing(tk.Tk):
         self["background"] = COLOR_APP_BACKGROUND
         self.iconbitmap(self.ICON_ICO_PATH)
         
+        current_user_account = CryptoAccount(
+            id=tk.StringVar(value="0x077c6c3ca8F3bAf37159A5b198c69e5562574042"),
+            balance_eth=tk.IntVar(value=100),
+            public_key=tk.StringVar(value="14baa5d10aaa0bfc836a427595c82037e74c467823fd214f0d007be2786246a5")
+        )
+        
+        self.current_user = User(
+            name=tk.StringVar(value="Juanito"),
+            account=current_user_account
+        )
         
         """ Ganache """
         self.web3 = Web3(Web3.HTTPProvider(self.GANACHE_URL))
@@ -241,9 +255,14 @@ class RideSharing(tk.Tk):
         
         help = Menu(menu_bar, tearoff=0)
         help.add_command(label='README', command=self.open_readme)
+
+        instagram = Menu(menu_bar, tearoff=0)
+        instagram.add_command(label='Hugondon', command=self.open_hugondon_instagram)
+        instagram.add_command(label='Sofi Sosa', command=self.open_sofi_instagram)
     
         menu_bar.add_cascade(label="File", menu=file)
         menu_bar.add_cascade(label="Help", menu=help)
+        menu_bar.add_cascade(label="Instagram", menu=instagram)
 
         self.rideshare_offer_frame = Offers(
             container, self, style="OffersFrame.TFrame")
@@ -268,5 +287,12 @@ class RideSharing(tk.Tk):
 
     def open_readme(self):
         os.startfile(self.README_PATH)
+
+    def open_hugondon_instagram(self):
+        webbrowser.open(self.HUGONDON_INSTAGRAM)
+        
+    def open_sofi_instagram(self):
+        webbrowser.open(self.SOFI_SOLUV_INSTAGRAM)
+        
 app = RideSharing()
 app.mainloop()
