@@ -4,6 +4,7 @@ class User():
     def __init__(self, name, account):
         self.name = name
         self.account = account
+        self.accepted_contracts = []
         
 
     def __str__(self):

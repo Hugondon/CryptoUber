@@ -16,7 +16,7 @@ class FutureTravelRow(ttk.Frame):
 
         self.accepted_str = tk.StringVar()
         self.driver_str = tk.StringVar()
-        self.date_str = tk.StringVar()
+        self.start_travel_time_str = tk.StringVar()
         self.destination_str = tk.StringVar()
         self.number_of_seats_str = tk.StringVar()
         self.cost_MXN_str = tk.StringVar()
@@ -35,7 +35,7 @@ class FutureTravelRow(ttk.Frame):
         )
         self.date_label = ttk.Label(
             parent,
-            textvariable=self.date_str,
+            textvariable=self.start_travel_time_str,
             style="TravelsNormalText.TLabel",
             padding=(0, 0, 5, 0)
 
@@ -70,7 +70,7 @@ class FutureTravelRow(ttk.Frame):
     def clear_row(self):
         self.accepted_str.set("")
         self.driver_str.set("")
-        self.date_str.set("")
+        self.start_travel_time_str.set("")
         self.destination_str.set("")
         self.number_of_seats_str.set("")
         self.cost_MXN_str.set("")
@@ -145,7 +145,6 @@ class FutureTravels(ttk.Frame):
             padding=(5, 5, 20, 0)
 
         )
-
         driver_label = ttk.Label(
             self,
             text="Driver",
@@ -186,8 +185,7 @@ class FutureTravels(ttk.Frame):
 
         table_separator = ttk.Separator(self)
 
-        selection_label.grid(row=2, column=0, sticky="EW",
-                             padx=(10, 0))
+        selection_label.grid(row=2, column=0, sticky="EW", padx=(10, 0))
         driver_label.grid(row=2, column=1, sticky="EW")
         date_time_label.grid(row=2, column=2, sticky="EW")
         destination_label.grid(row=2, column=3, sticky="EW")
@@ -274,12 +272,11 @@ class FutureTravels(ttk.Frame):
 
     def update_rideshare_future_travels_rows(self):
         self.clear_rows()
-        for index, ride in enumerate(settings.g_rideshare_future_travels):
+        for index, smart_contract in enumerate(settings.g_rideshare_future_travels):            
             current_row = self.rows[index] 
             current_row.accepted_str.set("✓")
-            current_row.driver_str.set(ride.name)
-            current_row.date_str.set(ride.date)
-            current_row.destination_str.set(ride.destination)
-            current_row.number_of_seats_str.set(ride.number_of_seats)
-            current_row.cost_MXN_str.set(ride.cost_MXN)
-            
+            current_row.driver_str.set(smart_contract.driver)
+            current_row.destination_str.set(smart_contract.destination)
+            current_row.start_travel_time_str.set(smart_contract.start_travel_time)
+            current_row.number_of_seats_str.set(smart_contract.number_of_seats)
+            current_row.cost_MXN_str.set(smart_contract.cost_eth)

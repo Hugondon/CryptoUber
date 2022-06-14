@@ -4,8 +4,9 @@ import tkinter as tk
 from tkinter import VERTICAL, ttk, Toplevel
 from frames.const import *
 from PIL import ImageTk, Image
+import settings
 from solcx import compile_source
-from utils import CryptoAccount, User
+from utils.SmartContract import SmartContract
 class Profile(ttk.Frame):
 
     IMAGE_JPG_PATH = "imgs/hugo.jpg"
@@ -132,6 +133,8 @@ class Profile(ttk.Frame):
         # print(f"Max Number of Passengers: {self.max_num_of_passengers.get()}")
         # print(f"Price: {self.price_eth.get()}")
         
+        
+        
         source_code = f'''
         pragma solidity >0.5.0;
 
@@ -139,14 +142,17 @@ class Profile(ttk.Frame):
                 string public driver;
                 string public destination;
                 string public startTravelTime;
+                uint public maxNumberOfSeats;
                 uint public duration;
-
+                uint public expirationTime;
 
                 constructor() public {{
                     driver = "{self.driver_name.get()}";
                     destination = "{self.destination_name.get()}";
                     startTravelTime = "{self.start_travel_hour.get()}:{self.start_travel_minute.get()}";
+                    maxNumberOfSeats = {self.max_num_of_passengers.get()};
                     duration = {self.travel_time_value.get()};
+                    expirationTime = {self.expiration_time_s.get()};
                 }}
 
                 function getDriver() view public returns (string memory) {{
@@ -158,10 +164,15 @@ class Profile(ttk.Frame):
                 function getStartTravelTime() view public returns (string memory) {{
                     return startTravelTime;
                 }}
+                function getmaxNumberOfSeats() view public returns (uint) {{
+                    return maxNumberOfSeats;
+                }}
                 function getDuration() view public returns (uint) {{
                     return duration;
                 }}
-                
+                function getExpirationTime() view public returns (uint) {{
+                    return expirationTime;
+                }}
         }}
         '''
 
@@ -173,6 +184,20 @@ class Profile(ttk.Frame):
 
         contract_id, contract_interface = compiled_solidity.popitem()
         bytecode, abi = contract_interface['bin'], contract_interface['abi']
+        
+        # Assign to Driver object
+        new_smart_contract = SmartContract(
+            driver=self.driver_name.get(),
+            destination=self.destination_name.get(),
+            start_travel_time=f"{self.start_travel_hour.get()}:{self.start_travel_minute.get()}",
+            number_of_seats=self.max_num_of_passengers.get(),
+            duration=self.travel_time_value.get(),
+            cost_eth=self.price_eth.get(),
+            expiration_time_s=self.expiration_time_s.get()
+        )
+        settings.g_rideshare_offers.append(new_smart_contract)
+        
+        self.controller.rideshare_offer_frame.update_driver_offer_rows()
         
         self.offer_window.destroy()
     
@@ -187,13 +212,10 @@ class Profile(ttk.Frame):
         
         container = ttk.Frame(self.offer_window, style="NewOfferFrame.TFrame")
         container.grid(row=0, column=0, sticky="NSEW")
-        # container.columnconfigure(0, minsize=WIDTH, weight=1) 
-        # container.rowconfigure(0, minsize=HEIGHT, weight=1)
         
         
         """ ATTRIBUTES """
         self.driver_name = tk.StringVar()
-        self.contract_number = tk.StringVar()
         self.destination_name = tk.StringVar()
         
         self.travel_time_value = tk.IntVar(value=20)
@@ -205,6 +227,7 @@ class Profile(ttk.Frame):
         self.max_num_of_passengers = tk.IntVar(value=2)
         
         self.price_eth = tk.DoubleVar(value=1)
+        self.expiration_time_s = tk.IntVar(value=10)
         
         """ LAYOUT """
         title_frame = ttk.Frame(
@@ -223,11 +246,6 @@ class Profile(ttk.Frame):
                             style="NewOfferTitle3.TLabel",
                             )
     
-
-        contract_number_label = ttk.Label(container,
-                            text= "Contract #",
-                            style="NewOfferTitle3.TLabel",
-                            )
 
         destination_label = ttk.Label(container,
                             text= "Destination",
@@ -264,6 +282,11 @@ class Profile(ttk.Frame):
                             style="NewOfferTitle3.TLabel",
                             )
         
+        contract_expiration_time_label = ttk.Label(container,
+                            text= "Expiration Time [s]: ",
+                            style="NewOfferTitle3.TLabel",
+                            )
+        
         buttons_frame = ttk.Frame(
             container,
             style="NewOfferFrame.TFrame"
@@ -282,25 +305,25 @@ class Profile(ttk.Frame):
     
         title_frame.grid(row=0, column=0, columnspan=3, sticky="WE", padx=(70, 0), pady=(25, 0))
         driver_name_label.grid(row=1, column=0, sticky="WE", padx=(50, 0), pady=(25, 20))
-        contract_number_label.grid(row=2, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
-        destination_label.grid(row=3, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
-        travel_time_label.grid(row=4, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
-        start_time_label.grid(row=5, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
-        eta_label.grid(row=6, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
-        max_num_of_passengers_label.grid(row=7, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
-        price_label.grid(row=8, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
+        destination_label.grid(row=2, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
+        travel_time_label.grid(row=3, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
+        start_time_label.grid(row=4, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
+        eta_label.grid(row=5, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
+        max_num_of_passengers_label.grid(row=6, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
+        price_label.grid(row=7, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
+        contract_expiration_time_label.grid(row=8, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
         buttons_frame.grid(row=9, columnspan=3, padx=(200,0),pady=(0,20), sticky="W")
         
         vertical_separator = ttk.Separator(container,orient=VERTICAL)
         
         vertical_separator.grid(column=1, row=1, rowspan=8, sticky="NSW", padx=(20,20), pady=(0, 20))
         
-        driver_name_input = ttk.Entry(
+        driver_name_input = ttk.Combobox(
             container, width=25, textvariable=self.driver_name
         )
-        contract_number_input = ttk.Entry(
-            container, width=25, textvariable=self.contract_number
-        )
+        driver_name_input["values"] = ("David", "Alex", "Luis", "Andy")
+        
+        
         destination_input = ttk.Entry(
             container, width=25, textvariable=self.destination_name
         )
@@ -377,14 +400,24 @@ class Profile(ttk.Frame):
             wrap=True
         )
         
+        contract_expiration_time_spinbox = tk.Spinbox(
+            container,
+            width=24,
+            from_=0,
+            to=15,
+            textvariable=self.expiration_time_s,
+            wrap=True
+        )
+        
+        
         driver_name_input.grid(column=2, row=1, padx=(0, 0), pady=(25,20), sticky="NW")
-        contract_number_input.grid(column=2, row=2, padx=(0, 0), pady=(0,20), sticky="NW")
-        destination_input.grid(column=2, row=3, pady=(0,20), sticky="NW")
-        travel_time_spinbox.grid(column=2, row=4, pady=(0,20), sticky="W")
-        start_travel_frame.grid(column=2, row=5, pady=(0,20), sticky="W")
-        eta_scale.grid(column=2, row=6, pady=(0,20), sticky="W")
-        max_num_of_passengers_spinbox.grid(column=2, row=7, pady=(0,20), sticky="W")
-        price_spinbox.grid(column=2, row=8, pady=(0,20), sticky="W")
+        destination_input.grid(column=2, row=2, pady=(0,20), sticky="NW")
+        travel_time_spinbox.grid(column=2, row=3, pady=(0,20), sticky="W")
+        start_travel_frame.grid(column=2, row=4, pady=(0,20), sticky="W")
+        eta_scale.grid(column=2, row=5, pady=(0,20), sticky="W")
+        max_num_of_passengers_spinbox.grid(column=2, row=6, pady=(0,20), sticky="W")
+        price_spinbox.grid(column=2, row=7, pady=(0,20), sticky="W")
+        contract_expiration_time_spinbox.grid(column=2, row=8, pady=(0,20), sticky="W")
             
     def callback_edit_profile(self):
         WIDTH, HEIGHT = 700,250

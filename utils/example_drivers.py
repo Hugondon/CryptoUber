@@ -1,5 +1,44 @@
 from utils.Driver import Driver
 from utils.CryptoAccount import CryptoAccount
+from utils.SmartContract import SmartContract
+
+EXAMPLE_SMART_CONTRACT_1 = SmartContract(
+    driver="David",
+    destination="Edif. Sur",
+    start_travel_time="10:00",
+    number_of_seats=2,
+    duration=30,
+    cost_eth=0.05,
+    expiration_time_s=10
+)
+EXAMPLE_SMART_CONTRACT_2 = SmartContract(
+    driver="Alex",
+    destination="Disney",
+    start_travel_time="10:00",
+    number_of_seats=2,
+    duration=45,
+    cost_eth=0.01,
+    expiration_time_s=20
+)
+EXAMPLE_SMART_CONTRACT_3 = SmartContract(
+    driver="Luis",
+    destination="CIEE",
+    start_travel_time="10:00",
+    number_of_seats=3,
+    duration=50,
+    cost_eth=0.18,
+    expiration_time_s=30
+)
+EXAMPLE_SMART_CONTRACT_4 = SmartContract(
+    driver="Andy",
+    destination="Edif. Sur",
+    start_travel_time="10:00",
+    number_of_seats=1,
+    duration=50,
+    cost_eth=0.1,
+    expiration_time_s=40
+)
+
 
 EXAMPLE_ACCOUNT_1 = CryptoAccount(
     id="0x0FaD3a9623A8841C2B43340CD9415f9daa8F8eE1",
@@ -22,15 +61,12 @@ EXAMPLE_ACCOUNT_4 = CryptoAccount(
     public_key="fcbcaa605bc0cf2e4fed0d47f3e272df3ef6e04b2f1250e213358d9715760889"
 )
 
-EXAMPLE_DRIVER_1 = Driver(selected=False, name="David", date="10:00 - 15:30",
-                          destination="Edif. Sur", number_of_seats=2, cost_MXN=50, timeout_s=10,
-                          account=EXAMPLE_ACCOUNT_1)
-EXAMPLE_DRIVER_2 = Driver(selected=False, name="Alex", date="10:00 - 15:45",
-                          destination="Disney", number_of_seats=2, cost_MXN=60, timeout_s=20,
-                          account=EXAMPLE_ACCOUNT_2)
-EXAMPLE_DRIVER_3 = Driver(selected=False, name="Luis", date="10:00 - 17:00",
-                          destination="CIEE", number_of_seats=3, cost_MXN=50, timeout_s=30,
-                          account=EXAMPLE_ACCOUNT_3)
-EXAMPLE_DRIVER_4 = Driver(selected=False, name="Andy", date="10:00 - 16:00",
-                          destination="Edif. Sur", number_of_seats=1, cost_MXN=45, timeout_s=40,
-                          account=EXAMPLE_ACCOUNT_4)
+EXAMPLE_DRIVER_1 = Driver(selected=False, name="David", account=EXAMPLE_ACCOUNT_1, contract=EXAMPLE_SMART_CONTRACT_1)
+EXAMPLE_DRIVER_2 = Driver(selected=False, name="Alex", account=EXAMPLE_ACCOUNT_2, contract=EXAMPLE_SMART_CONTRACT_2)
+EXAMPLE_DRIVER_3 = Driver(selected=False, name="Luis", account=EXAMPLE_ACCOUNT_3, contract=EXAMPLE_SMART_CONTRACT_3)
+EXAMPLE_DRIVER_4 = Driver(selected=False, name="Andy", account=EXAMPLE_ACCOUNT_4, contract=EXAMPLE_SMART_CONTRACT_4)
+
+# EXAMPLE_DRIVER_1.contracts.append(EXAMPLE_SMART_CONTRACT_1)
+# EXAMPLE_DRIVER_2.contracts.append(EXAMPLE_SMART_CONTRACT_2)
+# EXAMPLE_DRIVER_3.contracts.append(EXAMPLE_SMART_CONTRACT_3)
+# EXAMPLE_DRIVER_4.contracts.append(EXAMPLE_SMART_CONTRACT_4)

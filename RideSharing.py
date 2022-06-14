@@ -1,5 +1,5 @@
-import settings
 import tkinter as tk
+import requests
 import os
 import webbrowser
 
@@ -216,7 +216,7 @@ class RideSharing(tk.Tk):
         
         current_user_account = CryptoAccount(
             id=tk.StringVar(value="0x077c6c3ca8F3bAf37159A5b198c69e5562574042"),
-            balance_eth=tk.IntVar(value=100),
+            balance_eth=tk.DoubleVar(value=1),
             public_key=tk.StringVar(value="14baa5d10aaa0bfc836a427595c82037e74c467823fd214f0d007be2786246a5")
         )
         
@@ -226,9 +226,11 @@ class RideSharing(tk.Tk):
         )
         
         """ Ganache """
-        self.web3 = Web3(Web3.HTTPProvider(self.GANACHE_URL))
-        self.web3.eth.defaultAccount=self.web3.eth.accounts[0]
-        
+        try:
+            self.web3 = Web3(Web3.HTTPProvider(self.GANACHE_URL))
+            self.web3.eth.defaultAccount=self.web3.eth.accounts[0]
+        except requests.exceptions.ConnectionError as e:
+            print("Ganache is not active!", e)
         
         """ LAYOUT CONFIGURATION """
         self.columnconfigure(0, weight=1)
