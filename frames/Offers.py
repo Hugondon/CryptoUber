@@ -86,12 +86,12 @@ class OfferRow(ttk.Frame):
             if(self.parent.controller.current_user.withdraw_from_account(amount=self.cost_eth)):
                 greeter_contract = self.parent.controller.web3.eth.contract(abi=self.smart_contract_abi, bytecode=self.smart_contract_bytecode)
                 tx_hash = greeter_contract.constructor().transact()
+                transaction_receipt = self.parent.controller.web3.eth.wait_for_transaction_receipt(tx_hash)
                 print(f"Hash: {self.parent.controller.web3.toHex(tx_hash)}")
-                tx_receipt = self.parent.controller.web3.eth.wait_for_transaction_receipt(tx_hash)
-                print(f"Contact Address: {tx_receipt.contractAddress}")
+                print(f"Contact Address: {transaction_receipt.contractAddress}")
 
-                self.parent.delete_driver(self.index)
-                offer_window.destroy()
+                self.parent.delete_offer(self.index, offer_was_accepted=True, transaction_receipt=transaction_receipt)
+                offer_window.destroy()  
             else:    
                 messagebox.showerror(
                     message=f"Insufficient Funds!",
@@ -106,14 +106,14 @@ class OfferRow(ttk.Frame):
         def callback_dismiss_offer():
             self.checkbox_value.set(False)
             self.parent.enable_checkbuttons()
-            self.parent.delete_driver(self.index, offer_was_accepted=False)
+            self.parent.delete_offer(self.index, offer_was_accepted=False)
             offer_window.destroy()
             
         def update_timer():
             if(self.expiration_time_s.get() == 0):
                 self.checkbox_value.set(False)
                 self.parent.enable_checkbuttons()
-                self.parent.delete_driver(self.index, offer_was_accepted=False)
+                self.parent.delete_offer(self.index, offer_was_accepted=False)
                 offer_window.destroy()
             else:
                 self.expiration_time_s.set(self.expiration_time_s.get() - 1)
@@ -432,7 +432,7 @@ class Offers(ttk.Frame):
             self.ninth_row,
         ]
         
-        self.update_driver_offer_rows()
+        self.update_offer_rows()
 
     def enable_checkbuttons(self):
         for row in self.rows:
@@ -447,7 +447,7 @@ class Offers(ttk.Frame):
         for row in self.rows:
             row.clear_row()
 
-    def update_driver_offer_rows(self):
+    def update_offer_rows(self):
 
         self.clear_rows()
         if not settings.g_rideshare_offers:
@@ -471,16 +471,17 @@ class Offers(ttk.Frame):
             current_row.active = True
             current_row.checkbox.grid(row=index + 4, column=0) # Offset por posicion inicials
 
-    def delete_driver(self, deleted_driver_index, offer_was_accepted=True):
+    def delete_offer(self, deleted_driver_index, offer_was_accepted=True, transaction_receipt=""):
         self.clear_rows()
         if not settings.g_rideshare_offers:
             return
         
-        selected_driver = settings.g_rideshare_offers.pop(deleted_driver_index)
-        selected_driver.selected = True
+        selected_offer = settings.g_rideshare_offers.pop(deleted_driver_index)
+        selected_offer.selected = True
         
         if offer_was_accepted:
-            settings.g_rideshare_future_travels.append(selected_driver)
+            selected_offer.transaction_receipt = transaction_receipt            
+            settings.g_rideshare_future_travels.append(selected_offer)
             self.controller.future_travels_frame.update_rideshare_future_travels_rows()
         
 

@@ -122,6 +122,15 @@ class RideSharing(tk.Tk):
                         background=COLOR_FUTURE_TRAVELS_BACKGROUND)
         style.configure("TravelsFrame.TFrame",
                         background=COLOR_FUTURE_TRAVELS_BACKGROUND)
+        style.configure(
+            "TravelsButton.TButton",
+            background=COLOR_FUTURE_TRAVELS_BACKGROUND,
+            foreground=COLOR_NORMAL_TEXT,
+            relief="raised",
+            font=("Segoe UI", 10),
+        )
+
+
 
         """ Profile Frame Styles """
         style.configure(
