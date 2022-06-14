@@ -22,6 +22,7 @@ class RideSharing(tk.Tk):
     ROW_2_HEIGHT = HEIGHT - ROW_1_HEIGHT
     
     README_PATH = 'README.md'
+    HOWTO_PATH = 'HOWTO.md'
     CAR_PNG_PATH = "imgs/car.png"
     CLOCK_PNG_PATH = "imgs/clock.png"
     MONEY_PNG_PATH = "imgs/money.png"
@@ -214,14 +215,19 @@ class RideSharing(tk.Tk):
         self["background"] = COLOR_APP_BACKGROUND
         self.iconbitmap(self.ICON_ICO_PATH)
         
+        self.username = tk.StringVar(value="Hugo")
+        self.account_id = tk.StringVar(value="0x077c6c3ca8F3bAf37159A5b198c69e5562574042")
+        self.account_balance = tk.DoubleVar(value=1)
+        
         current_user_account = CryptoAccount(
-            id=tk.StringVar(value="0x077c6c3ca8F3bAf37159A5b198c69e5562574042"),
-            balance_eth=tk.DoubleVar(value=1),
+            id=self.account_id,
+            balance_eth=self.account_balance,
             public_key=tk.StringVar(value="14baa5d10aaa0bfc836a427595c82037e74c467823fd214f0d007be2786246a5")
         )
         
+        
         self.current_user = User(
-            name=tk.StringVar(value="Juanito"),
+            name=self.username,
             account=current_user_account
         )
         
@@ -257,6 +263,7 @@ class RideSharing(tk.Tk):
         
         help = Menu(menu_bar, tearoff=0)
         help.add_command(label='README', command=self.open_readme)
+        help.add_command(label='HOWTO', command=self.open_howto)
 
         instagram = Menu(menu_bar, tearoff=0)
         instagram.add_command(label='Hugondon', command=self.open_hugondon_instagram)
@@ -289,6 +296,9 @@ class RideSharing(tk.Tk):
 
     def open_readme(self):
         os.startfile(self.README_PATH)
+
+    def open_howto(self):
+        os.startfile(self.HOWTO_PATH)
 
     def open_hugondon_instagram(self):
         webbrowser.open(self.HUGONDON_INSTAGRAM)

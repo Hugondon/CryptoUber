@@ -69,7 +69,7 @@ class Profile(ttk.Frame):
 
         name_text = ttk.Label(
             information_frame,
-            textvariable=self.controller.current_user.name,
+            textvariable=self.controller.username,
             style="ProfileInformation.TLabel"
         )
         id_text = ttk.Label(
@@ -79,7 +79,7 @@ class Profile(ttk.Frame):
         )
         balance_text = ttk.Label(
             information_frame,
-            textvariable=self.controller.current_user.account.balance_eth,
+            textvariable=self.controller.account_balance,
             style="ProfileInformation.TLabel"
         )
         
@@ -123,69 +123,7 @@ class Profile(ttk.Frame):
 
 
     def callback_accept_contract(self):
-        
-        # print(f"Driver name: {self.driver_name.get()}")
-        # print(f"Contract #: {self.contract_number.get()}")
-        # print(f"Destination Name: {self.destination_name.get()}")
-        # print(f"Expected Travel Time: {self.travel_time_value.get()}")
-        # print(f"Start Travel Time: {self.start_travel_hour.get()}:{self.start_travel_minute.get()}")
-        # print(f"ETA: {self.eta_minutes.get()}")
-        # print(f"Max Number of Passengers: {self.max_num_of_passengers.get()}")
-        # print(f"Price: {self.price_eth.get()}")
-        
-        
-        
-        source_code = f'''
-        pragma solidity >0.5.0;
-
-            contract Greeter {{
-                string public driver;
-                string public destination;
-                string public startTravelTime;
-                uint public maxNumberOfSeats;
-                uint public duration;
-                uint public expirationTime;
-
-                constructor() public {{
-                    driver = "{self.driver_name.get()}";
-                    destination = "{self.destination_name.get()}";
-                    startTravelTime = "{self.start_travel_hour.get()}:{self.start_travel_minute.get()}";
-                    maxNumberOfSeats = {self.max_num_of_passengers.get()};
-                    duration = {self.travel_time_value.get()};
-                    expirationTime = {self.expiration_time_s.get()};
-                }}
-
-                function getDriver() view public returns (string memory) {{
-                    return driver;
-                }}
-                function getDestination() view public returns (string memory) {{
-                    return destination;
-                }}
-                function getStartTravelTime() view public returns (string memory) {{
-                    return startTravelTime;
-                }}
-                function getmaxNumberOfSeats() view public returns (uint) {{
-                    return maxNumberOfSeats;
-                }}
-                function getDuration() view public returns (uint) {{
-                    return duration;
-                }}
-                function getExpirationTime() view public returns (uint) {{
-                    return expirationTime;
-                }}
-        }}
-        '''
-
-        # Solidity source code
-        compiled_solidity = compile_source(
-            source_code,
-            output_values=['abi', 'bin']
-        )
-
-        contract_id, contract_interface = compiled_solidity.popitem()
-        bytecode, abi = contract_interface['bin'], contract_interface['abi']
-        
-        # Assign to Driver object
+  
         new_smart_contract = SmartContract(
             driver=self.driver_name.get(),
             destination=self.destination_name.get(),
@@ -198,7 +136,6 @@ class Profile(ttk.Frame):
         settings.g_rideshare_offers.append(new_smart_contract)
         
         self.controller.rideshare_offer_frame.update_driver_offer_rows()
-        
         self.offer_window.destroy()
     
     def callback_add_offer(self):
@@ -420,7 +357,12 @@ class Profile(ttk.Frame):
         contract_expiration_time_spinbox.grid(column=2, row=8, pady=(0,20), sticky="W")
             
     def callback_edit_profile(self):
-        WIDTH, HEIGHT = 700,250
+        
+        
+        def callback_accept_profile_changes():
+            profile_window.destroy()
+            
+        WIDTH, HEIGHT = 335, 260
         
         profile_window= Toplevel(self)
         
@@ -428,14 +370,82 @@ class Profile(ttk.Frame):
         profile_window.geometry(f"{WIDTH}x{HEIGHT}")
         profile_window.iconbitmap(self.controller.ICON_ICO_PATH)
         
-        container = ttk.Frame(profile_window, style="AppFrame.TFrame")
+        container = ttk.Frame(profile_window, style="NewOfferFrame.TFrame")
         container.grid(row=0, column=0, sticky="NSEW")
-        container.columnconfigure(0, minsize=WIDTH, weight=1) 
-        container.rowconfigure(0, minsize=HEIGHT, weight=1)
         
-        title_label = ttk.Label(container,
+        title_frame = ttk.Frame(
+            container,
+            style="NewOfferFrame.TFrame"
+        )
+        
+        title_label = ttk.Label(title_frame,
                             text= "Edit Your Profile!",
-                            style="TextTitle.TLabel",
+                            style="NewOfferTitle2.TLabel",
                             )
+        title_label.grid(column=0, row=0, sticky="W") # Para evitar que color de fondo se vaya a la derecha
+        
+        
+        user_name_label = ttk.Label(container,
+                            text= "User Name",
+                            style="NewOfferTitle3.TLabel",
+                            )
+    
 
-        title_label.grid(row=0, column=0, sticky="WE", padx=(10,0))
+        account_id_label = ttk.Label(container,
+                            text= "Account ID",
+                            style="NewOfferTitle3.TLabel",
+                            )
+    
+
+        balance_label = ttk.Label(container,
+                            text= "New Balance",
+                            style="NewOfferTitle3.TLabel",
+                            )
+        
+        
+        buttons_frame = ttk.Frame(
+            container,
+            style="NewOfferFrame.TFrame"
+        )
+        
+        accept_button = ttk.Button(
+            buttons_frame,
+            text="Accept",
+            command=callback_accept_profile_changes,
+            style="NewOfferButton.TButton",
+            width=15,
+            cursor="hand2"
+        )
+        accept_button.grid(column=0, row=0, sticky="W")
+        
+        title_frame.grid(row=0, column=0, columnspan=3, sticky="WE", padx=(80, 0), pady=(25, 20))
+        user_name_label.grid(row=1, column=0, sticky="EW", padx=(30, 0), pady=(0, 20))
+        account_id_label.grid(row=2, column=0, sticky="EW", padx=(30, 0), pady=(0, 20))
+        balance_label.grid(row=3, column=0, sticky="EW", padx=(30, 0), pady=(0, 20))
+        buttons_frame.grid(row=4, columnspan=3, padx=(90,0),pady=(0,20), sticky="W")
+        
+        vertical_separator = ttk.Separator(container,orient=VERTICAL)
+        
+        vertical_separator.grid(column=1, row=1, rowspan=3, sticky="NSW", padx=(20,20), pady=(0, 20))
+        
+        username_input = ttk.Entry(
+            container, width=25, textvariable=self.controller.username
+        )
+        account_id_input = ttk.Entry(
+            container, width=25, textvariable=self.controller.account_id
+        )
+        balance_spinbox = tk.Spinbox(
+            container,
+            width=24,
+            format="%.4f",
+            increment=0.01,
+            from_=0,
+            to=10,
+            textvariable=self.controller.account_balance,
+            wrap=True
+        )
+        
+        username_input.grid(column=2, row=1, pady=(0,20), sticky="NW")
+        account_id_input.grid(column=2, row=2, pady=(0,20), sticky="NW")
+        balance_spinbox.grid(column=2, row=3, pady=(0,20), sticky="NW")
+        

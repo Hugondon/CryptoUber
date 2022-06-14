@@ -15,7 +15,7 @@
 ## Deliverables
 
 - [X] Deliverable # 1 - MOC of User Interface
-- [ ] Deliverable # 2 - System Infrastructure
+- [X] Deliverable # 2 - System Infrastructure
 - [ ] Deliverable # 3 - Exam Workshop
 
 ## Graphical User Interface Guide

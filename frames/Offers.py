@@ -81,9 +81,15 @@ class OfferRow(ttk.Frame):
         
         def callback_accept_offer():
             self.checkbox_value.set(False)
-            self.parent.enable_checkbuttons()
+            self.parent.enable_checkbuttons()            
             
             if(self.parent.controller.current_user.withdraw_from_account(amount=self.cost_MXN)):
+                greeter_contract = self.parent.controller.web3.eth.contract(abi=self.smart_contract_abi, bytecode=self.smart_contract_bytecode)
+                tx_hash = greeter_contract.constructor().transact()
+                print(f"Hash: {self.parent.controller.web3.toHex(tx_hash)}")
+                tx_receipt = self.parent.controller.web3.eth.wait_for_transaction_receipt(tx_hash)
+                print(f"Contact Address: {tx_receipt.contractAddress}")
+
                 self.parent.delete_driver(self.index)
                 offer_window.destroy()
             else:    
@@ -460,7 +466,8 @@ class Offers(ttk.Frame):
                 current_row.account_str = settings.g_driver_dictionary[smart_contract.driver].account.id
             else:
                 current_row.account_str = "0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                
+            current_row.smart_contract_bytecode = smart_contract.bytecode
+            current_row.smart_contract_abi = smart_contract.abi
             current_row.active = True
             current_row.checkbox.grid(row=index + 4, column=0) # Offset por posicion inicials
 
@@ -490,5 +497,7 @@ class Offers(ttk.Frame):
                 current_row.account_str = settings.g_driver_dictionary[smart_contract.driver].account.id
             else:
                 current_row.account_str = "0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            current_row.smart_contract_bytecode = smart_contract.bytecode
+            current_row.smart_contract_abi = smart_contract.abi
             current_row.active = True
             current_row.checkbox.grid(row=index + 4, column=0) # Offset por posicion inicials
