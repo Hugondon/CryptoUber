@@ -29,8 +29,8 @@ class OfferRow(ttk.Frame):
         self.start_travel_time_str = tk.StringVar()
         self.destination_str = tk.StringVar()
         self.number_of_seats_str = tk.StringVar()
-        self.cost_MXN_str = tk.StringVar()
-        self.cost_MXN = 0;
+        self.cost_eth_str = tk.StringVar()
+        self.cost_eth = 0;
         self.expiration_time_s = tk.IntVar()
         
         self.account_str = ""
@@ -65,7 +65,7 @@ class OfferRow(ttk.Frame):
         )
         self.cost_label = ttk.Label(
             parent,
-            textvariable=self.cost_MXN_str,
+            textvariable=self.cost_eth_str,
             style="OffersNormalText.TLabel",
             padding=(0, 0, 5, 0)
         )
@@ -83,7 +83,7 @@ class OfferRow(ttk.Frame):
             self.checkbox_value.set(False)
             self.parent.enable_checkbuttons()            
             
-            if(self.parent.controller.current_user.withdraw_from_account(amount=self.cost_MXN)):
+            if(self.parent.controller.current_user.withdraw_from_account(amount=self.cost_eth)):
                 greeter_contract = self.parent.controller.web3.eth.contract(abi=self.smart_contract_abi, bytecode=self.smart_contract_bytecode)
                 tx_hash = greeter_contract.constructor().transact()
                 print(f"Hash: {self.parent.controller.web3.toHex(tx_hash)}")
@@ -241,8 +241,8 @@ class OfferRow(ttk.Frame):
         self.start_travel_time_str.set("")
         self.destination_str.set("")
         self.number_of_seats_str.set("")
-        self.cost_MXN_str.set("")
-        self.cost_MXN = 0
+        self.cost_eth_str.set("")
+        self.cost_eth = 0
         self.checkbox.grid_remove()
         if(self.active):
             self.checkbox.grid_remove()
@@ -343,7 +343,7 @@ class Offers(ttk.Frame):
             style="OffersTitle3.TLabel",
             padding=(10, 5, 5, 0)
         )
-        cost_MXN_label = ttk.Label(
+        cost_eth_label = ttk.Label(
             self,
             text="Cost Eth",
             style="OffersTitle3.TLabel",
@@ -356,7 +356,7 @@ class Offers(ttk.Frame):
         start_travel_time_label.config(anchor=CENTER)
         destination_label.config(anchor=CENTER)
         seats_number_label.config(anchor=CENTER)
-        cost_MXN_label.config(anchor=CENTER)
+        cost_eth_label.config(anchor=CENTER)
 
         table_separator = ttk.Separator(self)
 
@@ -365,7 +365,7 @@ class Offers(ttk.Frame):
         start_travel_time_label.grid(row=2, column=2, sticky="EW")
         destination_label.grid(row=2, column=3, sticky="EW")
         seats_number_label.grid(row=2, column=4, sticky="EW")
-        cost_MXN_label.grid(row=2, column=5, sticky="EW")
+        cost_eth_label.grid(row=2, column=5, sticky="EW")
         
         table_separator.grid(row=3, columnspan=7, padx=(10, 5), sticky="EW")
 
@@ -459,8 +459,8 @@ class Offers(ttk.Frame):
             current_row.destination_str.set(smart_contract.destination)
             current_row.start_travel_time_str.set(smart_contract.start_travel_time)
             current_row.number_of_seats_str.set(smart_contract.number_of_seats)
-            current_row.cost_MXN_str.set(smart_contract.cost_eth)
-            current_row.cost_MXN = smart_contract.cost_eth
+            current_row.cost_eth_str.set(smart_contract.cost_eth)
+            current_row.cost_eth = smart_contract.cost_eth
             current_row.expiration_time_s.set(smart_contract.expiration_time_s)
             if(settings.g_driver_dictionary.get(smart_contract.driver)):
                 current_row.account_str = settings.g_driver_dictionary[smart_contract.driver].account.id
@@ -490,8 +490,8 @@ class Offers(ttk.Frame):
             current_row.start_travel_time_str.set(smart_contract.start_travel_time)
             current_row.destination_str.set(smart_contract.destination)
             current_row.number_of_seats_str.set(smart_contract.number_of_seats)
-            current_row.cost_MXN_str.set(smart_contract.cost_eth)
-            current_row.cost_MXN = smart_contract.cost_eth
+            current_row.cost_eth_str.set(smart_contract.cost_eth)
+            current_row.cost_eth = smart_contract.cost_eth
             current_row.expiration_time_s.set(smart_contract.expiration_time_s)
             if(settings.g_driver_dictionary.get(smart_contract.driver)):
                 current_row.account_str = settings.g_driver_dictionary[smart_contract.driver].account.id

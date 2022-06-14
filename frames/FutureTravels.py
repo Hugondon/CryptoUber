@@ -19,7 +19,7 @@ class FutureTravelRow(ttk.Frame):
         self.start_travel_time_str = tk.StringVar()
         self.destination_str = tk.StringVar()
         self.number_of_seats_str = tk.StringVar()
-        self.cost_MXN_str = tk.StringVar()
+        self.cost_eth_str = tk.StringVar()
         
         self.accepted_label = ttk.Label(
             parent,
@@ -56,7 +56,7 @@ class FutureTravelRow(ttk.Frame):
         )
         self.cost_label = ttk.Label(
             parent,
-            textvariable=self.cost_MXN_str,
+            textvariable=self.cost_eth_str,
             style="TravelsNormalText.TLabel",
             padding=(0, 0, 5, 0)
         )
@@ -73,7 +73,7 @@ class FutureTravelRow(ttk.Frame):
         self.start_travel_time_str.set("")
         self.destination_str.set("")
         self.number_of_seats_str.set("")
-        self.cost_MXN_str.set("")
+        self.cost_eth_str.set("")
         
 class FutureTravels(ttk.Frame):
 
@@ -169,7 +169,7 @@ class FutureTravels(ttk.Frame):
             style="TravelsTitle3.TLabel",
             padding=(10, 5, 5, 0)
         )
-        cost_MXN_label = ttk.Label(
+        cost_eth_label = ttk.Label(
             self,
             text="Cost Eth",
             style="TravelsTitle3.TLabel",
@@ -181,7 +181,7 @@ class FutureTravels(ttk.Frame):
         date_time_label.config(anchor=CENTER)
         destination_label.config(anchor=CENTER)
         seats_number_label.config(anchor=CENTER)
-        cost_MXN_label.config(anchor=CENTER)
+        cost_eth_label.config(anchor=CENTER)
 
         table_separator = ttk.Separator(self)
 
@@ -190,7 +190,7 @@ class FutureTravels(ttk.Frame):
         date_time_label.grid(row=2, column=2, sticky="EW")
         destination_label.grid(row=2, column=3, sticky="EW")
         seats_number_label.grid(row=2, column=4, sticky="EW")
-        cost_MXN_label.grid(row=2, column=5, sticky="EW")
+        cost_eth_label.grid(row=2, column=5, sticky="EW")
 
         table_separator.grid(row=3, columnspan=6, padx=(10, 10), sticky="EW")
 
@@ -279,4 +279,4 @@ class FutureTravels(ttk.Frame):
             current_row.destination_str.set(smart_contract.destination)
             current_row.start_travel_time_str.set(smart_contract.start_travel_time)
             current_row.number_of_seats_str.set(smart_contract.number_of_seats)
-            current_row.cost_MXN_str.set(smart_contract.cost_eth)
+            current_row.cost_eth_str.set(smart_contract.cost_eth)
