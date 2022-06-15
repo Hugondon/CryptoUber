@@ -61,10 +61,10 @@ EXAMPLE_ACCOUNT_4 = CryptoAccount(
     public_key="fcbcaa605bc0cf2e4fed0d47f3e272df3ef6e04b2f1250e213358d9715760889"
 )
 
-EXAMPLE_DRIVER_1 = Driver(selected=False, name="David", account=EXAMPLE_ACCOUNT_1, contract=EXAMPLE_SMART_CONTRACT_1)
-EXAMPLE_DRIVER_2 = Driver(selected=False, name="Alex", account=EXAMPLE_ACCOUNT_2, contract=EXAMPLE_SMART_CONTRACT_2)
-EXAMPLE_DRIVER_3 = Driver(selected=False, name="Luis", account=EXAMPLE_ACCOUNT_3, contract=EXAMPLE_SMART_CONTRACT_3)
-EXAMPLE_DRIVER_4 = Driver(selected=False, name="Andy", account=EXAMPLE_ACCOUNT_4, contract=EXAMPLE_SMART_CONTRACT_4)
+EXAMPLE_DRIVER_1 = Driver(name="David", account=EXAMPLE_ACCOUNT_1, contract=EXAMPLE_SMART_CONTRACT_1)
+EXAMPLE_DRIVER_2 = Driver(name="Alex", account=EXAMPLE_ACCOUNT_2, contract=EXAMPLE_SMART_CONTRACT_2)
+EXAMPLE_DRIVER_3 = Driver(name="Luis", account=EXAMPLE_ACCOUNT_3, contract=EXAMPLE_SMART_CONTRACT_3)
+EXAMPLE_DRIVER_4 = Driver(name="Andy", account=EXAMPLE_ACCOUNT_4, contract=EXAMPLE_SMART_CONTRACT_4)
 
 # EXAMPLE_DRIVER_1.contracts.append(EXAMPLE_SMART_CONTRACT_1)
 # EXAMPLE_DRIVER_2.contracts.append(EXAMPLE_SMART_CONTRACT_2)

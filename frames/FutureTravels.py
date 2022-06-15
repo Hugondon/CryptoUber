@@ -36,34 +36,29 @@ class FutureTravelRow(ttk.Frame):
             parent,
             textvariable=self.driver_str,
             style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
         )
         self.date_label = ttk.Label(
             parent,
             textvariable=self.start_travel_time_str,
             style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
 
         )
         self.destination_label = ttk.Label(
             parent,
             textvariable=self.destination_str,
             style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
 
         )
         self.seats_label = ttk.Label(
             parent,
             textvariable=self.number_of_seats_str,
             style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
 
         )
         self.cost_label = ttk.Label(
             parent,
             textvariable=self.cost_eth_str,
             style="TravelsNormalText.TLabel",
-            padding=(0, 0, 5, 0)
         )
         
         self.driver_label.config(anchor=CENTER)
@@ -83,8 +78,6 @@ class FutureTravelRow(ttk.Frame):
         self.cost_eth_str.set("")
         
     def show_contract_information(self):
-        
-        
         def callback_accept_offer():
             offer_window.destroy()  
                 
@@ -175,7 +168,6 @@ class FutureTravelRow(ttk.Frame):
         information_frame.grid(row=1, column=0, padx=(10,0), pady=(0, 20))
         buttons_frame.grid(row=2, column=0, padx=(40,0), pady=(0, 20))  
         
-        
 class FutureTravels(ttk.Frame):
 
     def __init__(self, parent, controller, style):
@@ -200,7 +192,7 @@ class FutureTravels(ttk.Frame):
         future_travels_label.grid(row=0, column=0, sticky="EW")
 
         title_frame.grid(row=0, column=0, columnspan=7, sticky="EW",
-                                  padx=(200, 0), pady=(5, 0))
+                                  padx=(130, 0), pady=(5, 0))
 
         """ SECOND ROW """
         car_img = ImageTk.PhotoImage(Image.open(self.controller.CAR_PNG_PATH).resize(
@@ -318,12 +310,12 @@ class FutureTravels(ttk.Frame):
         """ SIXTH ROW """
         self.sixth_row = FutureTravelRow(self)
         
-        self.sixth_row.contract_information_button.grid(row=5, column=0)
-        self.sixth_row.driver_label.grid(row=5, column=1)
-        self.sixth_row.date_label.grid(row=5, column=2)
-        self.sixth_row.destination_label.grid(row=5, column=3)
-        self.sixth_row.seats_label.grid(row=5, column=4)
-        self.sixth_row.cost_label.grid(row=5, column=5)
+        self.sixth_row.contract_information_button.grid(row=6, column=0)
+        self.sixth_row.driver_label.grid(row=6, column=1)
+        self.sixth_row.date_label.grid(row=6, column=2)
+        self.sixth_row.destination_label.grid(row=6, column=3)
+        self.sixth_row.seats_label.grid(row=6, column=4)
+        self.sixth_row.cost_label.grid(row=6, column=5)
 
         """ SEVENTH ROW """
         self.seventh_row = FutureTravelRow(self)
@@ -338,22 +330,22 @@ class FutureTravels(ttk.Frame):
         """ EIGTH ROW """
         self.eigth_row = FutureTravelRow(self)
         
-        self.eigth_row.contract_information_button.grid(row=7, column=0)
-        self.eigth_row.driver_label.grid(row=7, column=1)
-        self.eigth_row.date_label.grid(row=7, column=2)
-        self.eigth_row.destination_label.grid(row=7, column=3)
-        self.eigth_row.seats_label.grid(row=7, column=4)
-        self.eigth_row.cost_label.grid(row=7, column=5)
+        self.eigth_row.contract_information_button.grid(row=8, column=0)
+        self.eigth_row.driver_label.grid(row=8, column=1)
+        self.eigth_row.date_label.grid(row=8, column=2)
+        self.eigth_row.destination_label.grid(row=8, column=3)
+        self.eigth_row.seats_label.grid(row=8, column=4)
+        self.eigth_row.cost_label.grid(row=8, column=5)
 
         """ NINTH ROW """
         self.ninth_row = FutureTravelRow(self)
         
-        self.ninth_row.contract_information_button.grid(row=7, column=0)
-        self.ninth_row.driver_label.grid(row=7, column=1)
-        self.ninth_row.date_label.grid(row=7, column=2)
-        self.ninth_row.destination_label.grid(row=7, column=3)
-        self.ninth_row.seats_label.grid(row=7, column=4)
-        self.ninth_row.cost_label.grid(row=7, column=5)
+        self.ninth_row.contract_information_button.grid(row=9, column=0)
+        self.ninth_row.driver_label.grid(row=9, column=1)
+        self.ninth_row.date_label.grid(row=9, column=2)
+        self.ninth_row.destination_label.grid(row=9, column=3)
+        self.ninth_row.seats_label.grid(row=9, column=4)
+        self.ninth_row.cost_label.grid(row=9, column=5)
 
         self.rows = [
             self.fourth_row,
@@ -364,21 +356,21 @@ class FutureTravels(ttk.Frame):
             self.ninth_row,
         ]
 
-        self.update_rideshare_future_travels_rows()
+        self.update_future_travels_row()
 
     def clear_rows(self):
         for row in self.rows:
             row.clear_row()
 
 
-    def update_rideshare_future_travels_rows(self):
+    def update_future_travels_row(self):
         self.clear_rows()
         for index, smart_contract in enumerate(settings.g_rideshare_future_travels):            
             current_row = self.rows[index] 
             current_row.contract_information_button.grid(row=index+4, column=0)
             current_row.driver_str.set(smart_contract.driver)
-            current_row.destination_str.set(smart_contract.destination)
             current_row.start_travel_time_str.set(smart_contract.start_travel_time)
+            current_row.destination_str.set(smart_contract.destination)
             current_row.number_of_seats_str.set(smart_contract.number_of_seats)
             current_row.cost_eth_str.set(smart_contract.cost_eth)
             current_row.transaction_receipt = smart_contract.transaction_receipt

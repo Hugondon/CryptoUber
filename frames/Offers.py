@@ -33,41 +33,36 @@ class OfferRow(ttk.Frame):
         self.cost_eth = 0;
         self.expiration_time_s = tk.IntVar()
         
-        self.account_str = ""
+        self.account_str = tk.StringVar()
         
         self.driver_label = ttk.Label(
             parent,
             textvariable=self.driver_str,
             style="OffersNormalText.TLabel",
-            padding=(0, 0, 5, 0)
 
         )
         self.start_travel_time_label = ttk.Label(
             parent,
             textvariable=self.start_travel_time_str,
             style="OffersNormalText.TLabel",
-            padding=(0, 0, 5, 0)
 
         )
         self.destination_label = ttk.Label(
             parent,
             textvariable=self.destination_str,
             style="OffersNormalText.TLabel",
-            padding=(0, 0, 5, 0)
 
         )
         self.seats_label = ttk.Label(
             parent,
             textvariable=self.number_of_seats_str,
             style="OffersNormalText.TLabel",
-            padding=(0, 0, 5, 0)
 
         )
         self.cost_label = ttk.Label(
             parent,
             textvariable=self.cost_eth_str,
             style="OffersNormalText.TLabel",
-            padding=(0, 0, 5, 0)
         )
         
 
@@ -271,7 +266,7 @@ class Offers(ttk.Frame):
         offers_label.grid(row=0, column=0, sticky="EW")
         
         title_frame.grid(row=0, column=0, columnspan=7, sticky="EW",
-                          padx=(200, 0), pady=(5, 0))
+                          padx=(130, 0), pady=(5, 0))
 
         """ SECOND ROW """
         car_img = ImageTk.PhotoImage(Image.open(self.controller.CAR_PNG_PATH).resize(
@@ -477,12 +472,11 @@ class Offers(ttk.Frame):
             return
         
         selected_offer = settings.g_rideshare_offers.pop(deleted_driver_index)
-        selected_offer.selected = True
         
         if offer_was_accepted:
             selected_offer.transaction_receipt = transaction_receipt            
             settings.g_rideshare_future_travels.append(selected_offer)
-            self.controller.future_travels_frame.update_rideshare_future_travels_rows()
+            self.controller.future_travels_frame.update_future_travels_row()
         
 
         for index, smart_contract in enumerate(settings.g_rideshare_offers):

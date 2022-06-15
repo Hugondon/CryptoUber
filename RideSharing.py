@@ -13,9 +13,9 @@ from utils import CryptoAccount, User
 
 class RideSharing(tk.Tk):
 
-    WIDTH, HEIGHT = 1030,700
+    WIDTH, HEIGHT = 960,700
     
-    COLUMN_1_WIDTH = 500
+    COLUMN_1_WIDTH = 450
     COLUMN_2_WIDTH = WIDTH - COLUMN_1_WIDTH
     
     ROW_1_HEIGHT = 300
@@ -34,6 +34,7 @@ class RideSharing(tk.Tk):
     GANACHE_URL = "http://127.0.0.1:7545"
     HUGONDON_INSTAGRAM = "https://www.instagram.com/Hugondon/"
     SOFI_SOLUV_INSTAGRAM = "https://www.instagram.com/_sofisoluv_/"
+    SHAKIRA_INSTAGRAM = "https://www.instagram.com/Shakira/"
 
     PNG_WIDTH, PNG_HEIGHT = 512, 512
     PNG_RESIZE_FACTOR = 26
@@ -277,6 +278,7 @@ class RideSharing(tk.Tk):
         instagram = Menu(menu_bar, tearoff=0)
         instagram.add_command(label='Hugondon', command=self.open_hugondon_instagram)
         instagram.add_command(label='Sofi Sosa', command=self.open_sofi_instagram)
+        instagram.add_command(label='Shakira', command=self.open_shakira_instagram)
     
         menu_bar.add_cascade(label="File", menu=file)
         menu_bar.add_cascade(label="Help", menu=help)
@@ -294,7 +296,7 @@ class RideSharing(tk.Tk):
         )
 
         ridesharing_title_label.grid(row=0, column=0, sticky="EW",
-                                     padx=(175, 0))
+                                     padx=(120, 0))
         self.rideshare_offer_frame.grid(
             row=1, column=0, sticky="NESW")
         self.future_travels_frame.grid(
@@ -314,6 +316,9 @@ class RideSharing(tk.Tk):
         
     def open_sofi_instagram(self):
         webbrowser.open(self.SOFI_SOLUV_INSTAGRAM)
+
+    def open_shakira_instagram(self):
+        webbrowser.open(self.SHAKIRA_INSTAGRAM)
         
 app = RideSharing()
 app.mainloop()

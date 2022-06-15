@@ -135,7 +135,7 @@ class Profile(ttk.Frame):
         )
         settings.g_rideshare_offers.append(new_smart_contract)
         
-        self.controller.rideshare_offer_frame.update_driver_offer_rows()
+        self.controller.rideshare_offer_frame.update_offer_rows()
         self.offer_window.destroy()
     
     def callback_add_offer(self):
