@@ -1,6 +1,27 @@
 # RideShare: Blockchain solution to our riding problems
-
 ## Cryptology and Security Tools Final Project
+---
+
+## 1. About the project
+
+### Deliverables
+- [X] Deliverable # 1 - MOC of User Interface
+- [X] Deliverable # 2 - System Infrastructure
+- [ ] Deliverable # 3 - Exam Workshop
+
+### Built with
+
+## 2. Getting started
+
+### Prerequisites
+
+### Installation
+
+## 3. Usage
+
+1. Run the Ridesharing.py python file.
+
+## 4. Roadmap
 
 ### Developed by Steren Squad
 
@@ -11,16 +32,6 @@
 | Danya Ortega Cabrera | A01339201 | [DanyaOC](https://github.com/DanyaOC) |
 | Hugo René Pérez Cabrera | A01337226 | [Hugondon](https://github.com/Hugondon)  |
 ---
-
-## Deliverables
-
-- [X] Deliverable # 1 - MOC of User Interface
-- [X] Deliverable # 2 - System Infrastructure
-- [ ] Deliverable # 3 - Exam Workshop
-
-## Graphical User Interface Guide
-
-1. Run the Ridesharing.py python file.
 
 ## Special Thanks
 
