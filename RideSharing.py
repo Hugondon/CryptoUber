@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.font as font
 import requests
 import os
 import webbrowser
@@ -13,9 +14,9 @@ from utils import CryptoAccount, User
 
 class RideSharing(tk.Tk):
 
-    WIDTH, HEIGHT = 960,700
+    WIDTH, HEIGHT = 1020,700
     
-    COLUMN_1_WIDTH = 450
+    COLUMN_1_WIDTH = 500
     COLUMN_2_WIDTH = WIDTH - COLUMN_1_WIDTH
     
     ROW_1_HEIGHT = 300
@@ -68,6 +69,8 @@ class RideSharing(tk.Tk):
         style.configure("OfferSelectionFrame.TFrame",
                         background=COLOR_OFFER_SELECTION_BACKGROUND)
 
+        style.configure("RideShareEntry.TEntry", font=("Segoe UI", 12))
+        font.nametofont("TkTextFont").configure(size=11)
         """ Rideshare Offers Frame Styles """
         style.configure(
             "OffersTitle2.TLabel",
@@ -222,10 +225,11 @@ class RideSharing(tk.Tk):
 
         self.title("Ridesharing App")
         self.geometry(f"{self.WIDTH}x{self.HEIGHT}")
+        self.resizable(False, False)
         self["background"] = COLOR_APP_BACKGROUND
         self.iconbitmap(self.ICON_ICO_PATH)
         
-        self.username = tk.StringVar(value="Hugo")
+        self.username = tk.StringVar(value="Steren Squad RideShare Account")
         self.account_id = tk.StringVar(value="0x077c6c3ca8F3bAf37159A5b198c69e5562574042")
         self.account_balance = tk.DoubleVar(value=1)
         

@@ -224,8 +224,8 @@ class FutureTravels(ttk.Frame):
                                 style="TravelsLabel.TLabel")
         money_panel.image = money_img
 
-        car_panel.grid(row=1, column=1, sticky="NS", pady=(5, 0))
-        clock_panel.grid(row=1, column=2, sticky="NS", pady=(5, 0))
+        car_panel.grid(row=1, column=1, sticky="NS", padx=(5, 0), pady=(5, 0))
+        clock_panel.grid(row=1, column=2, sticky="NS", padx=(3, 0), pady=(5, 0))
         placeholder_panel.grid(row=1, column=3, sticky="NS", pady=(5, 0))
         seats_panel.grid(row=1, column=4, sticky="NS", pady=(5, 0))
         money_panel.grid(row=1, column=5, sticky="NS", pady=(5, 0))
@@ -242,7 +242,7 @@ class FutureTravels(ttk.Frame):
             self,
             text="Driver",
             style="TravelsTitle3.TLabel",
-            padding=(10, 5, 5, 0)
+            padding=(15, 5, 5, 0)
         )
         date_time_label = ttk.Label(
             self,
@@ -264,7 +264,7 @@ class FutureTravels(ttk.Frame):
         )
         cost_eth_label = ttk.Label(
             self,
-            text="Cost Eth",
+            text="Highest Bid [eth]",
             style="TravelsTitle3.TLabel",
             padding=(10, 5, 5, 0)
         )

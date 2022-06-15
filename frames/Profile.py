@@ -9,10 +9,13 @@ from solcx import compile_source
 from utils.SmartContract import SmartContract
 class Profile(ttk.Frame):
 
-    IMAGE_JPG_PATH = "imgs/hugo.jpg"
-    
-    JPG_WIDTH, JPG_HEIGHT = 704, 938
+    # IMAGE_JPG_PATH = "imgs/hugo.jpg"
+    # JPG_WIDTH, JPG_HEIGHT = 704, 938
     JPG_RESIZE_REFACTOR = 4
+    
+    IMAGE_JPG_PATH = "imgs/steren_squad.jpg"
+    JPG_WIDTH, JPG_HEIGHT = 566, 917
+    JPG_RESIZE_REFACTOR = 3
     
     def __init__(self, parent, controller, style):
         super().__init__(parent, style=style)
@@ -140,7 +143,7 @@ class Profile(ttk.Frame):
     
     def callback_add_offer(self):
         
-        WIDTH, HEIGHT = 512,520
+        WIDTH, HEIGHT = 600,530
         self.offer_window= Toplevel(self, bg=COLOR_NEW_OFFER_BACKGROUND)
         
         self.offer_window.title("New Offer")
@@ -249,7 +252,7 @@ class Profile(ttk.Frame):
         max_num_of_passengers_label.grid(row=6, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
         price_label.grid(row=7, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
         contract_expiration_time_label.grid(row=8, column=0, sticky="WE", padx=(50, 0), pady=(0, 20))
-        buttons_frame.grid(row=9, columnspan=3, padx=(200,0),pady=(0,20), sticky="W")
+        buttons_frame.grid(row=9, columnspan=3, padx=(250,0),pady=(0,20), sticky="W")
         
         vertical_separator = ttk.Separator(container,orient=VERTICAL)
         

@@ -32,6 +32,7 @@ class OfferRow(ttk.Frame):
         self.cost_eth_str = tk.StringVar()
         self.cost_eth = 0;
         self.expiration_time_s = tk.IntVar()
+        self.proposed_bid = tk.DoubleVar()
         
         self.account_str = tk.StringVar()
         
@@ -78,20 +79,29 @@ class OfferRow(ttk.Frame):
             self.checkbox_value.set(False)
             self.parent.enable_checkbuttons()            
             
-            if(self.parent.controller.current_user.withdraw_from_account(amount=self.cost_eth)):
-                greeter_contract = self.parent.controller.web3.eth.contract(abi=self.smart_contract_abi, bytecode=self.smart_contract_bytecode)
-                tx_hash = greeter_contract.constructor().transact()
-                transaction_receipt = self.parent.controller.web3.eth.wait_for_transaction_receipt(tx_hash)
-                print(f"Hash: {self.parent.controller.web3.toHex(tx_hash)}")
-                print(f"Contact Address: {transaction_receipt.contractAddress}")
+            # Update price to proposed by bid
+            if(self.proposed_bid.get() >= self.cost_eth):
+                self.cost_eth = self.proposed_bid.get()
+                if(self.parent.controller.current_user.withdraw_from_account(amount=self.cost_eth)):
+                    greeter_contract = self.parent.controller.web3.eth.contract(abi=self.smart_contract_abi, bytecode=self.smart_contract_bytecode)
+                    tx_hash = greeter_contract.constructor().transact()
+                    transaction_receipt = self.parent.controller.web3.eth.wait_for_transaction_receipt(tx_hash)
+                    print(f"Hash: {self.parent.controller.web3.toHex(tx_hash)}")
+                    print(f"Contact Address: {transaction_receipt.contractAddress}")
 
-                self.parent.delete_offer(self.index, offer_was_accepted=True, transaction_receipt=transaction_receipt)
-                offer_window.destroy()  
-            else:    
-                messagebox.showerror(
-                    message=f"Insufficient Funds!",
-                    title="Error"
-                )
+                    self.parent.delete_offer(self.index, offer_was_accepted=True, transaction_receipt=transaction_receipt, highest_bid=self.cost_eth)
+                    offer_window.destroy()  
+                else:    
+                    messagebox.showerror(
+                        message=f"Insufficient Funds!",
+                        title="Error"
+                    )
+            else:
+                    messagebox.showerror(
+                        message=f"Invalid Cost Proposal!",
+                        title="Error"
+                    )
+                
             
         def callback_cancel_offer():
             self.checkbox_value.set(False)
@@ -162,6 +172,12 @@ class OfferRow(ttk.Frame):
                             text= "Account: ",
                             style="OfferSelectionText.TLabel",
                             )
+        
+        bid_label = ttk.Label(information_frame,
+                            text= "Bid [eth]: ",
+                            style="OfferSelectionText.TLabel",
+                            )
+        
         driver_name_text = ttk.Label(information_frame,
                             textvariable=self.driver_str,
                             style="OfferSelectionText.TLabel",
@@ -170,12 +186,20 @@ class OfferRow(ttk.Frame):
                             text=self.account_str,
                             style="OfferSelectionText.TLabel",
                             )
+        bid_text = ttk.Entry(
+            information_frame, width=25, textvariable=self.proposed_bid
+        )
+        
         
         driver_name_label.grid(column=0, row=0, sticky="W")
         driver_name_text.grid(column=1, row=0, sticky="W")
         
         account_label.grid(column=0, row=1, sticky="W")
         account_text.grid(column=1, row=1, sticky="W")
+        
+        bid_label.grid(column=0, row=2, sticky='W')
+        bid_text.grid(column=1, row=2, sticky="W")
+        
         
         expire_label = ttk.Label(timer_frame,
                             text= "Expires in: ",
@@ -228,8 +252,8 @@ class OfferRow(ttk.Frame):
         
         title_frame.grid(row=0, column=0, padx=(20, 0), pady=(20, 20))
         information_frame.grid(row=1, column=0, padx=(10,0), pady=(0, 20))
-        timer_frame.grid(row=2, column=0, padx=(30,0), pady=(0, 30))
-        buttons_frame.grid(row=3, column=0, padx=(40,0), pady=(0, 20))       
+        timer_frame.grid(row=2, column=0, padx=(30,0), pady=(0, 20))
+        buttons_frame.grid(row=3, column=0, padx=(40,0), pady=(0, 10))       
     
     def clear_row(self):
         self.driver_str.set("")
@@ -340,7 +364,7 @@ class Offers(ttk.Frame):
         )
         cost_eth_label = ttk.Label(
             self,
-            text="Cost Eth",
+            text="Proposed Cost [eth]",
             style="OffersTitle3.TLabel",
             padding=(10, 5, 5, 0)
         )
@@ -466,7 +490,7 @@ class Offers(ttk.Frame):
             current_row.active = True
             current_row.checkbox.grid(row=index + 4, column=0) # Offset por posicion inicials
 
-    def delete_offer(self, deleted_driver_index, offer_was_accepted=True, transaction_receipt=""):
+    def delete_offer(self, deleted_driver_index, offer_was_accepted=True, transaction_receipt="", highest_bid=0):
         self.clear_rows()
         if not settings.g_rideshare_offers:
             return
@@ -474,6 +498,7 @@ class Offers(ttk.Frame):
         selected_offer = settings.g_rideshare_offers.pop(deleted_driver_index)
         
         if offer_was_accepted:
+            selected_offer.cost_eth = highest_bid
             selected_offer.transaction_receipt = transaction_receipt            
             settings.g_rideshare_future_travels.append(selected_offer)
             self.controller.future_travels_frame.update_future_travels_row()
