@@ -19,7 +19,7 @@ The RideSharing App is majorly developed in Python. However, additional technolo
       ![image](https://user-images.githubusercontent.com/36273088/173963168-464171f9-7205-4d5b-ab98-02f9fc14211e.png)
 - Previous installation of Ganache Blockchain environment
       https://trufflesuite.com/ganache/
-      ![image](https://user-images.githubusercontent.com/36273088/173963681-b17cb601-cbf8-43da-adca-5a7eddad638e.png)
+      ![image](https://user-images.githubusercontent.com/36273088/173965624-5a1e150e-790d-4216-8049-95d1b5a1a290.png)
 
 ### Installation
 Compilation process How-to (Python)
