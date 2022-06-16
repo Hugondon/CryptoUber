@@ -18,6 +18,22 @@ The RideSharing App is majorly developed in Python. However, additional technolo
 
 ---
 
+## IMPORTANT NOTE -
+The app will only run properly if a Ganache Workspace has already been created and is running alongside the app.
+To create a new workspace: 
+1. Open Ganache and click on New Workspace
+	>![image](https://user-images.githubusercontent.com/36273088/173965514-3fbb904c-396f-458a-8b2f-74532924da16.png)
+
+2. Give a name to the workspace 
+	>![image](https://user-images.githubusercontent.com/36273088/173973598-b89c345d-ff25-4095-a55e-b3b6e733e077.png)
+
+3. Click on the "Save Workspace" Button
+
+## Ganache will be up and running 
+![image](https://user-images.githubusercontent.com/36273088/173965624-5a1e150e-790d-4216-8049-95d1b5a1a290.png)
+
+---
+
 ### Installation
 1. Download all the files in this repository
 2. Open terminal CMD
@@ -58,21 +74,3 @@ The RideSharing App is majorly developed in Python. However, additional technolo
 
 ## The Graphical User Interface will then start.
 ![image](https://user-images.githubusercontent.com/36273088/173973255-c1e7a533-2e19-4540-8f07-88d582b30fff.png)
-
----
-
-## IMPORTANT NOTE -
-The app will only run properly if a Ganache Workspace has already been created and is running alongside the app.
-To create a new workspace: 
-1. Open Ganache and click on New Workspace
-	>![image](https://user-images.githubusercontent.com/36273088/173965514-3fbb904c-396f-458a-8b2f-74532924da16.png)
-
-2. Give a name to the workspace 
-	>![image](https://user-images.githubusercontent.com/36273088/173973598-b89c345d-ff25-4095-a55e-b3b6e733e077.png)
-
-3. Click on the "Save Workspace" Button
-
-## Ganache will be up and running 
-![image](https://user-images.githubusercontent.com/36273088/173965624-5a1e150e-790d-4216-8049-95d1b5a1a290.png)
-
-
