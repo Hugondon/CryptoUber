@@ -27,16 +27,21 @@ Compilation process How-to (Python)
 1. Download all the files in this repository
 2. Open terminal CMD
 3. Verify Python is installed 
-      python --version
+      >python --version
 4. Go to the path to which the files were downloaded by typing
-      cd PATH Example: "cd C:\Users\student\Documents\ITESM\CryptoProject"
+      >cd PATH Example: "cd C:\Users\student\Documents\ITESM\CryptoProject"
 5. Install required libraries by typing
-      pip install -r requirements.txt
+      >pip install -r requirements.txt
 6. Verify the installation by typing
-      pip freeze and checking if the installed dependencies match the requirements.txt file
-7. Run the file by typing
-      python "PATH\RideSharing.py" Example: python "C:\Users\student\Documents\ITESM\RideSharing.py"
+      >pip freeze 
+7. Check if the installed dependencies match the requirements.txt file
+8. Run the file by typing
+      >python "PATH\RideSharing.py" 
+      >Example: python "C:\Users\student\Documents\ITESM\RideSharing.py"
 The Graphical User Interface will then start.
+
+IMPORTANT NOTE - The app will only run properly if a Ganache Workspace has already been created and is running alongside the app.
+![image](https://user-images.githubusercontent.com/36273088/173965514-3fbb904c-396f-458a-8b2f-74532924da16.png)
 
 ## 3. Usage
 This application uses the benefits of Blockchain and SmartContracts to make transactions without a middleman to make deals between drivrs and clients!
