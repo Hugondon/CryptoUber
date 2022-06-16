@@ -365,10 +365,9 @@ class Profile(ttk.Frame):
         def callback_accept_profile_changes():
             profile_window.destroy()
             
-        WIDTH, HEIGHT = 335, 260
+        WIDTH, HEIGHT = 450, 260
         
-        profile_window= Toplevel(self)
-        
+        profile_window= Toplevel(self, bg=COLOR_NEW_OFFER_BACKGROUND)
         profile_window.title("Profile Settings")
         profile_window.geometry(f"{WIDTH}x{HEIGHT}")
         profile_window.iconbitmap(self.controller.ICON_ICO_PATH)
@@ -432,14 +431,14 @@ class Profile(ttk.Frame):
         vertical_separator.grid(column=1, row=1, rowspan=3, sticky="NSW", padx=(20,20), pady=(0, 20))
         
         username_input = ttk.Entry(
-            container, width=25, textvariable=self.controller.username
+            container, width=30, textvariable=self.controller.username
         )
         account_id_input = ttk.Entry(
-            container, width=25, textvariable=self.controller.account_id
+            container, width=30, textvariable=self.controller.account_id
         )
         balance_spinbox = tk.Spinbox(
             container,
-            width=24,
+            width=29,
             format="%.4f",
             increment=0.01,
             from_=0,
