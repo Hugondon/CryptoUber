@@ -5,11 +5,6 @@
 ## 1. About the project
 RideSharing is an application that assists in making deals between drivers and clients without a middleman in order to ensure both sides have a fair opportunity in the terms of thesee deals. Instead of using a traditional payment method such as cash or credit/debit cards, RideSharing allows transactions using blockchain and smart contracts technologies. The transactions are executed in a bidding format and use the Ether crypto asset as their currency.
 
-### Deliverables
-- [X] Deliverable # 1 - MOC of User Interface
-- [X] Deliverable # 2 - System Infrastructure
-- [ ] Deliverable # 3 - Exam Workshop
-
 ### Built with
 - Python
 - Ganache
@@ -44,8 +39,28 @@ Compilation process How-to (Python)
 The Graphical User Interface will then start.
 
 ## 3. Usage
+This application uses the benefits of Blockchain and SmartContracts to make transactions without a middleman to make deals between drivrs and clients!
 
+Some of its functionalities are:
+
+### 
+### Posting Offers as a Driver!
+![add_new_offers](readme_imgs/add_new_offers.jpg)
+### Making Bids to take one of the available Offers!
+![new_offer_selection](readme_imgs/new_offer_selection.jpg)
+### Keeping Track of the Smart Contracts related to the Transaction!
+![smartcontract_keeping_track](readme_imgs/smartcontract_keeping_track.jpg)
+### Edit Your Profile!
+![edit_your_profile](readme_imgs/edit_your_profile.jpg)
+### Access the README and HOWTO files at any moment
+![access_readme_howto](readme_imgs/access_readme_howto.jpg)
+### Follow the Developers on Instagram
+![instagram](readme_imgs/instagram.jpg)
 ## 4. Roadmap
+
+- [X] Deliverable # 1 - MOC of User Interface
+- [X] Deliverable # 2 - System Infrastructure
+- [X] Deliverable # 3 - Exam Workshop
 
 ### Developed by Steren Squad
 
