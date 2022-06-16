@@ -4,11 +4,6 @@
 
 ## 1. About the project
 
-### Deliverables
-- [X] Deliverable # 1 - MOC of User Interface
-- [X] Deliverable # 2 - System Infrastructure
-- [ ] Deliverable # 3 - Exam Workshop
-
 ### Built with
 
 ## 2. Getting started
@@ -19,9 +14,29 @@
 
 ## 3. Usage
 
-1. Run the Ridesharing.py python file.
+This application uses the benefits of Blockchain and SmartContracts to make transactions without a middleman to make deals between drivrs and clients!
+
+Some of its functionalities are:
+
+### 
+### Posting Offers as a Driver!
+![add_new_offers](readme_imgs/add_new_offers.jpg)
+### Making Bids to take one of the available Offers!
+![new_offer_selection](readme_imgs/new_offer_selection.jpg)
+### Keeping Track of the Smart Contracts related to the Transaction!
+![smartcontract_keeping_track](readme_imgs/smartcontract_keeping_track.jpg)
+### Edit Your Profile!
+![edit_your_profile](readme_imgs/edit_your_profile.jpg)
+### Access the README and HOWTO files at any moment
+![access_readme_howto](readme_imgs/access_readme_howto.jpg)
+### Follow the Developers on Instagram
+![instagram](readme_imgs/instagram.jpg)
 
 ## 4. Roadmap
+
+- [X] Deliverable # 1 - MOC of User Interface
+- [X] Deliverable # 2 - System Infrastructure
+- [X] Deliverable # 3 - Exam Workshop
 
 ### Developed by Steren Squad
 
